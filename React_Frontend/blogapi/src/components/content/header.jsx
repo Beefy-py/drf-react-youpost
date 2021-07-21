@@ -77,19 +77,19 @@ const Header = () => {
                 {localStorage.getItem("access_token") ? (
                   <li>
                     <NavLink className={dropDownItemStyling} to="/logout">
-                      Logout
+                      <i class="fas fa-sign-out-alt"></i> Logout
                     </NavLink>
                   </li>
                 ) : (
                   <React.Fragment>
                     <li>
                       <NavLink className={dropDownItemStyling} to="/login">
-                        Login
+                        <i class="fas fa-sign-in-alt"></i> Login
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className={dropDownItemStyling} to="/register">
-                        Register
+                        <i class="fas fa-user-plus"></i> Register
                       </NavLink>
                     </li>
                   </React.Fragment>
@@ -100,7 +100,7 @@ const Header = () => {
                 </li>
                 <li>
                   <NavLink className={dropDownItemStyling} to="/">
-                    Settings
+                    <i class="fas fa-user-cog"></i> Settings
                   </NavLink>
                 </li>
               </ul>

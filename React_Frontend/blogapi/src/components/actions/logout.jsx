@@ -9,7 +9,7 @@ export default class Logout extends Component {
     this.props.toggleShowSearchBar(false);
   }
 
-  componentWillUnmount() {
+  performLogout = () => {
     const response = axiosInstance.post("user/logout/blacklist/", {
       refresh_token: localStorage.getItem("refresh_token"),
     });
@@ -18,7 +18,7 @@ export default class Logout extends Component {
     localStorage.removeItem("currentUser");
     axiosInstance.defaults.headers["Authorization"] = null;
     console.log("logged out", response);
-  }
+  };
   render() {
     return (
       <DarkContext.Consumer>
@@ -51,7 +51,11 @@ export default class Logout extends Component {
               >
                 No
               </Link>
-              <Link className="btn btn-danger" to="/login">
+              <Link
+                className="btn btn-danger"
+                to="/login"
+                onClick={() => this.performLogout()}
+              >
                 Yes
               </Link>
             </div>

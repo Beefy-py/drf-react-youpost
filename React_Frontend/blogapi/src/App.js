@@ -17,6 +17,7 @@ import apiURL from "./apiUrl";
 import axios from "axios";
 import SearchBar from "./components/actions/searchBar";
 import PostDetailWrapper from "./components/content/postDetailWrapper";
+import NotFoundPage from "./components/content/notFoundPage";
 
 export default class App extends Component {
   state = {
@@ -144,6 +145,10 @@ export default class App extends Component {
                   />
                 )}
               />
+
+              <Route path="*">
+                <NotFoundPage />
+              </Route>
             </Switch>
             <Footer />
           </Router>

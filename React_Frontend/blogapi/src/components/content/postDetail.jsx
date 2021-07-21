@@ -4,7 +4,6 @@ import DarkContext from "./../../context/darkMode";
 
 export default class PostDetail extends Component {
   render() {
-    console.log(this.props);
     const { title, author, content, published } = this.props.post;
 
     return (
