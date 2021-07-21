@@ -163,6 +163,16 @@ main .badge {
   margin-top: -0.5rem;
 }
 
+.posts-results-on-change p {
+  opacity: 0.85;
+  display: inline;
+}
+
+.posts-results-on-change .fa-search-plus {
+  opacity: 0.15;
+  padding-right: 0.5rem;
+}
+
 .dropdown-menu .dropdown-item {
   background-color: white;
   color: black;
