@@ -1,0 +1,287 @@
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Lato&family=Permanent+Marker&family=Signika:wght@300;400&family=Varela+Round&display=swap");
+
+:root {
+  --dark-bg: #343a40;
+}
+
+* {
+  transition: 0.15s;
+}
+
+.dark-page-bg {
+  background-color: var(--dark-bg);
+}
+
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+nav {
+  width: 90%;
+  margin: 0.5rem auto;
+  border-radius: 0.3rem;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  font-family: "Signika", sans-serif;
+}
+
+.navbar-collapse {
+  display: grid;
+}
+
+.navbar-nav {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.nav-item.dropdown {
+  grid-column: end;
+}
+
+.dark-mode-toggler {
+  grid-column: 12;
+  justify-self: center;
+  align-self: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.dark-mode-toggler .fa-moon {
+  color: beige;
+}
+
+main {
+  width: 90%;
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 0.4rem;
+}
+
+main .badge {
+  font-size: 1rem;
+}
+
+.searchbar {
+  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  width: 90%;
+  grid-gap: 1rem;
+}
+
+.searchbar input {
+  grid-column: 1/12;
+}
+
+.no-results {
+  margin: 0 auto 1rem;
+  width: 90%;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+.no-results h3 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--gray);
+  padding: 1rem 0.5rem;
+}
+
+.no-results h3 i {
+  padding-left: 0.5rem;
+}
+
+.posts-results-section {
+  width: 90%;
+  margin: 0 auto 1rem;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-row-gap: 2rem;
+  padding: 1rem 0.5rem;
+  border-radius: 0.3rem;
+}
+
+.posts-results-section .post {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.posts-results-section .post h3 {
+  font-size: 1.5rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.posts-results-section .post hr {
+  height: 0.005rem;
+}
+
+.posts-results-section .post div {
+  opacity: 0.6;
+}
+
+.posts-results-section .date,
+.posts-results-section .author {
+  display: inline;
+}
+
+.posts-results-section .author {
+  margin-right: 0.5rem;
+  color: var(--info);
+}
+
+.posts-results-section .vertical-line {
+  margin-right: 0.5rem;
+  opacity: 0.5;
+  color: var(--black);
+}
+
+.posts-results-section .post .fa-arrow-right {
+  margin-left: 0.5rem;
+  color: var(--success) !important;
+  opacity: 1;
+}
+
+.dropdown-menu .dropdown-item {
+  background-color: white;
+  color: black;
+}
+
+.nav-link.active {
+  color: blue;
+}
+
+.form-container {
+  width: 30%;
+  margin: 3rem auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.form-group {
+  margin-top: 1rem;
+}
+
+.form-group label {
+  margin-top: 0.5rem;
+}
+
+.form-container button {
+  margin-top: 0.5rem;
+}
+
+:disabled {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+}
+
+.logout {
+  width: 90%;
+  text-align: center;
+  margin: 1rem auto;
+  border-radius: 0.4rem;
+  padding: 1rem;
+}
+
+.logout p {
+  font-size: 1.2rem;
+}
+
+.logout-action-wrapper a {
+  margin: 0 2rem 0 2rem;
+}
+
+.post-tags {
+  padding: 1rem 0;
+}
+
+.posts-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+.dark-page-shadow {
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-dark {
+  border: 0.5px solid rgba(255, 255, 255, 0.137);
+}
+
+.card div {
+  padding: 1rem;
+}
+
+.card-img-top {
+  object-fit: cover;
+  max-height: 40vh;
+}
+
+.post-container {
+  width: 70%;
+  margin: 1rem auto;
+  border-radius: 1rem;
+}
+
+footer {
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 0.3rem;
+}
+
+.footer-dark .border-bottom {
+  border: none !important;
+}
+
+@media only screen and (max-width: 1440px) {
+  .posts-section {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  html,
+  .dark-page-bg {
+    overflow-x: hidden;
+  }
+
+  .posts-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  .posts-section {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .dark-mode-toggler {
+    grid-column: 11;
+  }
+
+  .card-dark {
+    width: unset;
+  }
+}
+
+/* ---------------------------------------- extras ----------------------------------------*/
+.rm-box-shadow {
+  box-shadow: none;
+}
+
+.hTyhSc.hTyhSc.hTyhSc {
+  margin: 0 auto 1rem !important;
+}
