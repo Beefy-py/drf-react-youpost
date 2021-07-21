@@ -1,17 +1,28 @@
 import React, { Component } from "react";
 import DarkContext from "../../context/darkMode";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import axios from "axios";
+import apiURL from "../../apiUrl";
 
 class SearchBar extends Component {
   state = {
     searchValue: "",
+    searchResults: [],
   };
 
   componentDidMount() {}
 
   handleChange = (e) => {
     e.preventDefault();
+
     this.setState({ searchValue: e.target.value });
+
+    if (e.target.value !== "") {
+      axios.get(apiURL + "search/?search=" + e.target.value).then((res) => {
+        console.log(res.data);
+        this.setState({ searchResults: res.data });
+      });
+    }
   };
 
   goSearch = (e) => {
@@ -25,25 +36,47 @@ class SearchBar extends Component {
   };
 
   render() {
+    const { searchResults, searchValue } = this.state;
+
     return (
       <DarkContext.Consumer>
         {(darkContext) => (
-          <form className="form-inline searchbar" onSubmit={this.goSearch}>
-            <input
-              className={
-                darkContext.darkMode
-                  ? "form-control bg-dark text-light"
-                  : "form-control"
-              }
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              onChange={this.handleChange}
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          <React.Fragment>
+            <form className="form-inline searchbar" onSubmit={this.goSearch}>
+              <input
+                className={
+                  darkContext.darkMode
+                    ? "form-control bg-dark text-light"
+                    : "form-control"
+                }
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                onChange={this.handleChange}
+              />
+              <button className="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+            <div style={{ width: "90%", margin: "0rem auto" }}>
+              <ul className="posts-results-on-change list-group list-group-flush dark-page-shadow">
+                {searchResults && searchValue
+                  ? searchResults.map((post) => (
+                      <li
+                        className={
+                          darkContext.darkMode
+                            ? "list-group-item bg-dark text-light"
+                            : "list-group-item"
+                        }
+                        key={post.id}
+                      >
+                        {post.title}
+                      </li>
+                    ))
+                  : ""}
+              </ul>
+            </div>
+          </React.Fragment>
         )}
       </DarkContext.Consumer>
     );

@@ -18,21 +18,6 @@ const SearchPage = () => {
     });
   }, [setPosts]);
 
-  /*<React.Fragment>
-      {posts.length ? (
-        <div className="posts-section">
-          {posts.map((post) => {
-            const { title, id } = post;
-            return <div key={id}>{title}</div>;
-          })}
-        </div>
-      ) : (
-        <div className="no-results border">
-          <h3>No Results</h3>
-        </div>
-      )}
-    </React.Fragment> */
-
   return (
     <React.Fragment>
       {posts.length ? (
@@ -67,7 +52,7 @@ const SearchPage = () => {
                   {excerpt.substring(0, 150) + "..."}{" "}
                   <Link to={"/posts/" + post.slug}>
                     {" "}
-                    <i class="fas fa-arrow-right"></i>
+                    <i className="fas fa-arrow-right"></i>
                   </Link>
                 </p>
               </div>
