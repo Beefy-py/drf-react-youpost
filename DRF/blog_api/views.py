@@ -39,5 +39,24 @@ class CreatePost(generics.CreateAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
+
+class UpdatePost(generics.RetrieveUpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostSerializer
+    lookup_field = "slug"
+
+    def get_object(self):
+        item = self.kwargs.get('slug')
+        return get_object_or_404(Post, slug=item)
     
+
+class DeletePost(generics.RetrieveDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostSerializer
+    lookup_field = "slug"
+
+    def get_object(self):
+        item = self.kwargs.get('slug')
+        return get_object_or_404(Post, slug=item)
+       
     
