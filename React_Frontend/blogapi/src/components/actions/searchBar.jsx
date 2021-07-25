@@ -70,7 +70,8 @@ class SearchBar extends Component {
                         }
                         key={post.id}
                       >
-                        <i class="fas fa-search-plus"></i> <p>{post.title}</p>
+                        <i className="fas fa-search-plus"></i>{" "}
+                        <p>{post.title}</p>
                       </li>
                     ))
                   : ""}
