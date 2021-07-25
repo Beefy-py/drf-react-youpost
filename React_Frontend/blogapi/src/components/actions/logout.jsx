@@ -16,6 +16,7 @@ export default class Logout extends Component {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("currentUser");
+
     axiosInstance.defaults.headers["Authorization"] = null;
     console.log("logged out", response);
   };

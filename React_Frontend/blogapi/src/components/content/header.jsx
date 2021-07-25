@@ -43,6 +43,11 @@ const Header = () => {
                 Posts
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" to="/create-post">
+                CreatePost
+              </NavLink>
+            </li>
             <li className="nav-item dark-mode-toggler">
               <i onClick={darkContext.toggleDarkMode}>
                 {darkContext.darkMode ? (
@@ -77,19 +82,19 @@ const Header = () => {
                 {localStorage.getItem("access_token") ? (
                   <li>
                     <NavLink className={dropDownItemStyling} to="/logout">
-                      <i class="fas fa-sign-out-alt"></i> Logout
+                      <i className="fas fa-sign-out-alt"></i> Logout
                     </NavLink>
                   </li>
                 ) : (
                   <React.Fragment>
                     <li>
                       <NavLink className={dropDownItemStyling} to="/login">
-                        <i class="fas fa-sign-in-alt"></i> Login
+                        <i className="fas fa-sign-in-alt"></i> Login
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className={dropDownItemStyling} to="/register">
-                        <i class="fas fa-user-plus"></i> Register
+                        <i className="fas fa-user-plus"></i> Register
                       </NavLink>
                     </li>
                   </React.Fragment>
@@ -100,7 +105,7 @@ const Header = () => {
                 </li>
                 <li>
                   <NavLink className={dropDownItemStyling} to="/">
-                    <i class="fas fa-user-cog"></i> Settings
+                    <i className="fas fa-user-cog"></i> Settings
                   </NavLink>
                 </li>
               </ul>

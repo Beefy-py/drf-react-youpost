@@ -14,10 +14,13 @@ class PostList(generics.ListAPIView):
     def get_queryset(self):
         return Post.objects.all()
 
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+class PostDetail(generics.RetrieveAPIView):
     lookup_field = "slug"
-    queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    def get_object(self):
+        item = self.kwargs.get('slug')
+        return get_object_or_404(Post, slug=item)
 
 class PostListDetailfilter(generics.ListAPIView):
 
@@ -30,3 +33,11 @@ class PostListDetailfilter(generics.ListAPIView):
     # '=' Exact matches.
     # '@' Full-text search. (Currently only supported Django's PostgreSQL backend.)
     # '$' Regex search.
+
+class CreatePost(generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+    
+    

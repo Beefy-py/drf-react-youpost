@@ -45,16 +45,16 @@ axiosInstance.interceptors.response.use(
     ) {
       const refreshToken = localStorage.getItem("refresh_token");
 
-      if (refreshToken) {
+      if (refreshToken !== "undefined") {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
-
         // exp date in token is expressed in seconds, while now() returns milliseconds:
         const now = Math.ceil(Date.now() / 1000);
-        console.log(tokenParts.exp);
+        // console.log(tokenParts.exp);
+        console.log(tokenParts);
 
         if (tokenParts.exp > now) {
           return axiosInstance
-            .post("/token/refresh/", { refresh: refreshToken })
+            .post("/token/refresh", { refresh: refreshToken })
             .then((response) => {
               localStorage.setItem("access_token", response.data.access);
               localStorage.setItem("refresh_token", response.data.refresh);
@@ -67,6 +67,7 @@ axiosInstance.interceptors.response.use(
               return axiosInstance(originalRequest);
             })
             .catch((err) => {
+              console.log("possuibly no token refresh");
               console.log(err);
             });
         } else {
@@ -74,8 +75,8 @@ axiosInstance.interceptors.response.use(
           window.location.href = "/login/";
         }
       } else {
-        console.log("Refresh token not available.");
         window.location.href = "/login/";
+        console.log("Refresh token not available.");
       }
     }
 

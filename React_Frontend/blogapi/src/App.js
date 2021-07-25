@@ -1,14 +1,19 @@
 import Header from "./components/content/header";
 import Footer from "./components/content/footer";
 import Body from "./components/content/body";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 import React, { Component } from "react";
 import RegisterForm from "./components/actions/registerForm";
 import LoginForm from "./components/actions/loginForm";
 import Logout from "./components/actions/logout";
-import PostDetail from "./components/content/postDetail";
 import SearchPage from "./components/content/searchPage";
+import CreatePost from "./components/actions/createPost";
 
 import UserContext from "./context/userContext";
 import DarkContext from "./context/darkMode";
@@ -33,6 +38,10 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    if (localStorage.getItem("refresh_token") === "undefined") {
+      localStorage.removeItem("currentUser");
+    }
+
     axios
       .get(apiURL + "user/list/")
       .then((res) => this.setState({ users: res.data }));
@@ -108,6 +117,17 @@ export default class App extends Component {
               />
 
               <Route
+                path="/create-post"
+                render={(props) => (
+                  <CreatePost
+                    toggleShowSearchBar={this.toggleShowSearchBar}
+                    users={this.state.users}
+                    {...props}
+                  />
+                )}
+              />
+
+              <Route
                 path="/login"
                 render={(props) => (
                   <LoginForm
@@ -157,3 +177,23 @@ export default class App extends Component {
     );
   }
 }
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  // Add your own authentication on the below line.
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        refreshToken !== "undefined" ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+};
