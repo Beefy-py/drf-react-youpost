@@ -56,6 +56,8 @@ axiosInstance.interceptors.response.use(
           return axiosInstance
             .post("/token/refresh", { refresh: refreshToken })
             .then((response) => {
+              console.log(response.data);
+
               localStorage.setItem("access_token", response.data.access);
               localStorage.setItem("refresh_token", response.data.refresh);
 
@@ -64,11 +66,9 @@ axiosInstance.interceptors.response.use(
               originalRequest.headers["Authorization"] =
                 "JWT " + response.data.access;
 
+              console.log("create new token");
+
               return axiosInstance(originalRequest);
-            })
-            .catch((err) => {
-              console.log("possuibly no token refresh");
-              console.log(err);
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);

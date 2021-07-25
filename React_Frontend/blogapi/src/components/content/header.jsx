@@ -66,7 +66,7 @@ const Header = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {localStorage.getItem("access_token")
+                {localStorage.getItem("refresh_token") !== "undefined"
                   ? localStorage.getItem("currentUser") ||
                     userContext.currentUser.name
                   : "Guest"}
@@ -79,7 +79,7 @@ const Header = () => {
                 }
                 aria-labelledby="navbarDropdown"
               >
-                {localStorage.getItem("access_token") ? (
+                {localStorage.getItem("refresh_token") !== "undefined" ? (
                   <li>
                     <NavLink className={dropDownItemStyling} to="/logout">
                       <i className="fas fa-sign-out-alt"></i> Logout
