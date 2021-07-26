@@ -23,6 +23,9 @@ import axios from "axios";
 import SearchBar from "./components/actions/searchBar";
 import PostDetailWrapper from "./components/content/postDetailWrapper";
 import NotFoundPage from "./components/content/notFoundPage";
+import UpdatePost from "./components/actions/updatePost";
+import DeletePost from "./components/actions/deletePost";
+import Dashboard from "./components/content/dashboard";
 
 export default class App extends Component {
   state = {
@@ -101,30 +104,30 @@ export default class App extends Component {
             <Header />
             {this.state.showSearchBar ? <SearchBar /> : ""}
             <Switch>
-              <Route
+              <PrivateRoute
                 path="/posts/:slug"
-                render={(props) => (
-                  <PostDetailWrapper
-                    toggleShowSearchBar={this.toggleShowSearchBar}
-                    {...props}
-                  />
-                )}
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                component={PostDetailWrapper}
+              />
+              <PrivateRoute
+                path="/update-post/:slug"
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                users={this.state.users}
+                component={UpdatePost}
               />
 
-              <Route
-                path="/search/"
-                render={(props) => <SearchPage {...props} />}
+              <PrivateRoute
+                path="/delete-post/:slug"
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                users={this.state.users}
+                component={DeletePost}
               />
 
-              <Route
+              <PrivateRoute
                 path="/create-post"
-                render={(props) => (
-                  <CreatePost
-                    toggleShowSearchBar={this.toggleShowSearchBar}
-                    users={this.state.users}
-                    {...props}
-                  />
-                )}
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                users={this.state.users}
+                component={CreatePost}
               />
 
               <Route
@@ -145,25 +148,25 @@ export default class App extends Component {
                   />
                 )}
               />
-              <Route
+
+              <PrivateRoute
                 path="/logout"
-                render={(props) => (
-                  <Logout
-                    toggleShowSearchBar={this.toggleShowSearchBar}
-                    {...props}
-                  />
-                )}
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                component={Logout}
               />
 
-              <Route
+              <PrivateRoute
+                exact
+                path="/dashboard"
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                component={Dashboard}
+              />
+
+              <PrivateRoute
                 exact
                 path="/"
-                render={(props) => (
-                  <Body
-                    toggleShowSearchBar={this.toggleShowSearchBar}
-                    {...props}
-                  />
-                )}
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                component={Body}
               />
 
               <Route path="*">
@@ -178,16 +181,30 @@ export default class App extends Component {
   }
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({
+  component: Component,
+  toggleShowSearchBar,
+  users,
+  ...rest
+}) => {
   // Add your own authentication on the below line.
-  const refreshToken = localStorage.getItem("refreshToken");
+
+  const refreshToken =
+    localStorage.getItem("refresh_token") === "undefined" ||
+    localStorage.getItem("refresh_token") === null
+      ? false
+      : true;
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        refreshToken !== "undefined" ? (
-          <Component {...props} />
+        refreshToken ? (
+          <Component
+            {...props}
+            users={users}
+            toggleShowSearchBar={toggleShowSearchBar}
+          />
         ) : (
           <Redirect
             to={{ pathname: "/login", state: { from: props.location } }}

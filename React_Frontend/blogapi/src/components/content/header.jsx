@@ -19,7 +19,6 @@ const Header = () => {
           ? "navbar-dark bg-dark navbar navbar-expand-lg dark-page-shadow"
           : "navbar-light bg-light navbar navbar-expand-lg border"
       }
-      style={{ position: "sticky !important" }}
     >
       <div className="container-fluid">
         <NavLink className="navbar-brand text-success" to="/">
@@ -38,6 +37,11 @@ const Header = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <NavLink className="nav-link active" to="/dashboard">
+                Dashboard
+              </NavLink>
+            </li>
             <li className="nav-item">
               <NavLink className="nav-link active" to="/">
                 Posts

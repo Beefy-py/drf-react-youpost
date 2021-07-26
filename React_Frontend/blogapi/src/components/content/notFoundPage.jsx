@@ -20,7 +20,7 @@ const NotFoundPage = () => {
           Sorry but, the content you are trying to access doesn't exist. We'll
           send you a link to go...
         </p>
-        <Link to="/">
+        <Link to="/dashboard">
           <i className="fas fa-hand-point-left"></i> Back Home
         </Link>
       </div>

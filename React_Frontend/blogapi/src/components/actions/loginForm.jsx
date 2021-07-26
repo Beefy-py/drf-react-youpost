@@ -39,7 +39,7 @@ export default class LoginForm extends Form {
         /*set user to current user */
         this.context.onLogIn(this.state.data.username);
         localStorage.setItem("currentUser", this.state.data.username);
-        this.props.history.replace("/");
+        this.props.history.replace("/dashboard");
       });
   };
 

@@ -41,7 +41,6 @@ export default class PostDetail extends Component {
                   <h1>{title}</h1>
                 </div>
                 <span>
-                  {'JSON.parse(atob(refreshToken.split(".")[1]))'}
                   <p>{userContext.getAuthor(author)}</p>
                   <p>
                     {published
