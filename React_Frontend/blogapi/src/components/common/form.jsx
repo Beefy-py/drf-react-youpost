@@ -20,6 +20,7 @@ export default class Form extends Component {
     if (!error) return null;
 
     const errors = {};
+
     for (let item of error.details) {
       errors[item.path[0]] = item.message;
     }
@@ -51,7 +52,8 @@ export default class Form extends Component {
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
 
-    const errorMessage = this.validateProperty(input);
+    let errorMessage = this.validateProperty(input);
+
     if (errorMessage) {
       errors[input.name] = errorMessage;
     } else {

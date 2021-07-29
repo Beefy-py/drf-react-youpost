@@ -16,8 +16,12 @@ export default class UserPosts extends Component {
                 <p>{post.published}</p>
               </div>
               <div className="actions">
-                <Link to={"/update-post/" + post.slug}>Upd</Link>
-                <Link to={"/delete-post/" + post.slug}>Del</Link>
+                <Link to={"/update-post/" + post.slug}>
+                  <i className="fas fa-wrench"></i>
+                </Link>
+                <Link to={"/delete-post/" + post.slug}>
+                  <i className="fas fa-trash-alt"></i>
+                </Link>
               </div>
             </div>
           ))}

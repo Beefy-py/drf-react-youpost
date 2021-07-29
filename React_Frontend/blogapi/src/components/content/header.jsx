@@ -8,6 +8,12 @@ const Header = () => {
   const userContext = useContext(UserContext);
   const darkContext = useContext(DarkContext);
 
+  const refreshToken = localStorage.getItem("refresh_token");
+  const accessToken = localStorage.getItem("access_token");
+
+  const authorized =
+    refreshToken === "undefined" || refreshToken === null ? false : true;
+
   const dropDownItemStyling = darkContext.darkMode
     ? "dropdown-item bg-dark text-light"
     : "dropdown-item bg-light";
@@ -70,10 +76,7 @@ const Header = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {localStorage.getItem("refresh_token") !== "undefined"
-                  ? localStorage.getItem("currentUser") ||
-                    userContext.currentUser.name
-                  : "Guest"}
+                {authorized ? localStorage.getItem("currentUser") : "Guest"}
               </NavLink>
               <ul
                 className={
@@ -83,7 +86,7 @@ const Header = () => {
                 }
                 aria-labelledby="navbarDropdown"
               >
-                {localStorage.getItem("refresh_token") !== "undefined" ? (
+                {authorized ? (
                   <li>
                     <NavLink className={dropDownItemStyling} to="/logout">
                       <i className="fas fa-sign-out-alt"></i> Logout

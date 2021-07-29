@@ -40,6 +40,15 @@ export default class LoginForm extends Form {
         this.context.onLogIn(this.state.data.username);
         localStorage.setItem("currentUser", this.state.data.username);
         this.props.history.replace("/dashboard");
+      })
+      .catch((response) => {
+        console.log(response.response);
+        const errorText = response.response.data.detail
+          ? "username or password incorrect"
+          : "";
+
+        const errors401 = { username: errorText, password: errorText };
+        this.setState({ errors: errors401 });
       });
   };
 

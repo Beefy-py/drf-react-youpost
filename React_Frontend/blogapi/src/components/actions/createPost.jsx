@@ -9,11 +9,16 @@ import axiosInstance from "./../../baseAxios";
 export default class CreatePost extends Form {
   componentDidMount() {
     this.props.toggleShowSearchBar(false);
+    axiosInstance.get().then((res) => {
+      const slugs = res.data.map((post) => post.slug);
+      this.setState({ slugs: slugs });
+    });
   }
 
   state = {
     data: { title: "", excerpt: "", content: "" },
     errors: {},
+    slugs: [],
   };
 
   schema = {
@@ -40,7 +45,7 @@ export default class CreatePost extends Form {
       .catch((response) => console.log(response.response));
   };
 
-  afterChange(input) {}
+  afterChange(inp) {}
 
   render() {
     return (

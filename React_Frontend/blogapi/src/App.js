@@ -26,6 +26,7 @@ import NotFoundPage from "./components/content/notFoundPage";
 import UpdatePost from "./components/actions/updatePost";
 import DeletePost from "./components/actions/deletePost";
 import Dashboard from "./components/content/dashboard";
+import axiosInstance from "./baseAxios";
 
 export default class App extends Component {
   state = {
@@ -41,7 +42,9 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    if (localStorage.getItem("refresh_token") === "undefined") {
+    console.log(axiosInstance.defaults.headers["Authorization"]);
+    const refreshToken = localStorage.getItem("refresh_token");
+    if (refreshToken === "undefined" || refreshToken === null) {
       localStorage.removeItem("currentUser");
     }
 
@@ -115,21 +118,18 @@ export default class App extends Component {
                 users={this.state.users}
                 component={UpdatePost}
               />
-
               <PrivateRoute
                 path="/delete-post/:slug"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 users={this.state.users}
                 component={DeletePost}
               />
-
               <PrivateRoute
                 path="/create-post"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 users={this.state.users}
                 component={CreatePost}
               />
-
               <Route
                 path="/login"
                 render={(props) => (
@@ -148,27 +148,23 @@ export default class App extends Component {
                   />
                 )}
               />
-
               <PrivateRoute
                 path="/logout"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 component={Logout}
               />
-
               <PrivateRoute
                 exact
                 path="/dashboard"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 component={Dashboard}
               />
-
               <PrivateRoute
                 exact
                 path="/"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 component={Body}
               />
-
               <Route path="*">
                 <NotFoundPage />
               </Route>

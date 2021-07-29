@@ -16,7 +16,7 @@ const UserPostsWrapper = ({ toggleShowSearchBar }) => {
   const [appState, setAppState] = useState({ loading: false, posts: null });
 
   const currentUserId = JSON.parse(
-    atob(localStorage.getItem("refresh_token").split(".")[1])
+    atob(localStorage.getItem("access_token").split(".")[1])
   ).user_id;
 
   useEffect(() => {

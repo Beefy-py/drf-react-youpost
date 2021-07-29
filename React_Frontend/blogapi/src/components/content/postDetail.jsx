@@ -7,8 +7,8 @@ export default class PostDetail extends Component {
   render() {
     const { title, slug, author, content, published } = this.props.post;
 
-    const refreshToken = localStorage.getItem("refresh_token");
-    const currentUserId = JSON.parse(atob(refreshToken.split(".")[1])).user_id;
+    const accessToken = localStorage.getItem("access_token");
+    const currentUserId = JSON.parse(atob(accessToken.split(".")[1])).user_id;
 
     return this.props.post ? (
       <DarkContext.Consumer>
@@ -25,8 +25,12 @@ export default class PostDetail extends Component {
                 <div>
                   {author === currentUserId ? (
                     <React.Fragment>
-                      <Link to={"/update-post/" + slug}>Update</Link>
-                      <Link to={"/delete-post/" + slug}>Delete</Link>
+                      <Link to={"/update-post/" + slug}>
+                        <i className="fas fa-wrench"></i>
+                      </Link>
+                      <Link to={"/delete-post/" + slug}>
+                        <i className="fas fa-trash-alt"></i>
+                      </Link>
                     </React.Fragment>
                   ) : (
                     ""

@@ -45,18 +45,18 @@ axiosInstance.interceptors.response.use(
     ) {
       const refreshToken = localStorage.getItem("refresh_token");
 
-      if (refreshToken !== "undefined" || refreshToken !== null) {
+      if (refreshToken !== "undefined") {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
         // exp date in token is expressed in seconds, while now() returns milliseconds:
         const now = Math.ceil(Date.now() / 1000);
         // console.log(tokenParts.exp);
-        console.log(tokenParts);
+        // console.log(tokenParts);
 
         if (tokenParts.exp > now) {
           return axiosInstance
             .post("/token/refresh", { refresh: refreshToken })
             .then((response) => {
-              console.log(response.data);
+              //console.log(response.data);
 
               localStorage.setItem("access_token", response.data.access);
               localStorage.setItem("refresh_token", response.data.refresh);
@@ -66,7 +66,7 @@ axiosInstance.interceptors.response.use(
               originalRequest.headers["Authorization"] =
                 "JWT " + response.data.access;
 
-              console.log("create new token");
+              //console.log("create new token");
 
               return axiosInstance(originalRequest);
             });

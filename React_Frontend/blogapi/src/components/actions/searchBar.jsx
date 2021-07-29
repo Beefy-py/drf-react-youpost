@@ -3,6 +3,7 @@ import DarkContext from "../../context/darkMode";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import apiURL from "../../apiUrl";
+import axiosInstance from "./../../baseAxios";
 
 class SearchBar extends Component {
   state = {
@@ -18,7 +19,7 @@ class SearchBar extends Component {
     this.setState({ searchValue: e.target.value });
 
     if (e.target.value !== "") {
-      axios.get(apiURL + "search/?search=" + e.target.value).then((res) => {
+      axiosInstance.get("search/?search=" + e.target.value).then((res) => {
         console.log(res.data);
         this.setState({ searchResults: res.data });
       });
