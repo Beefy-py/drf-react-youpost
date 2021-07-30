@@ -55,7 +55,15 @@ export default class PostDetail extends Component {
                     </p>
                   </span>
                   <hr />
-                  <div className="post-content">{content}</div>
+                  <div
+                    className={
+                      darkContext.darkMode
+                        ? "post-content"
+                        : "post-content text-dark"
+                    }
+                  >
+                    {content}
+                  </div>
 
                   <React.Fragment>
                     {author === currentUserId ? (
