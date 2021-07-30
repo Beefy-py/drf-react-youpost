@@ -107,6 +107,7 @@ export default class App extends Component {
             <Header />
             {this.state.showSearchBar ? <SearchBar /> : ""}
             <Switch>
+              <PrivateRoute path="/search" component={SearchPage} />
               <PrivateRoute
                 path="/posts/:slug"
                 toggleShowSearchBar={this.toggleShowSearchBar}

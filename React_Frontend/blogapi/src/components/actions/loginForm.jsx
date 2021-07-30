@@ -5,6 +5,7 @@ import UserContext from "../../context/userContext";
 import apiURL from "../../apiUrl";
 import axiosInstance from "../../baseAxios";
 import DarkContext from "../../context/darkMode";
+import { Link } from "react-router-dom";
 
 export default class LoginForm extends Form {
   static contextType = UserContext;
@@ -61,15 +62,18 @@ export default class LoginForm extends Form {
           <div
             className={
               "form-container border " +
-              `${darkContext.darkMode ? "bg-dark" : "bg-light"}`
+              `${darkContext.darkMode ? "bg-dark text-light" : "bg-light"}`
             }
           >
-            <h1 className={darkContext.darkMode ? "text-light" : ""}>Login</h1>
+            <h1>Login</h1>
             <form action="" onSubmit={this.handleSubmit}>
               {this.renderInput("username", "Username")}
               {this.renderInput("password", "Password", "password")}
               {this.renderButton("Login")}
             </form>
+            <p>
+              Don't have an account? <Link to="/register">Register</Link>
+            </p>
           </div>
         )}
       </DarkContext.Consumer>

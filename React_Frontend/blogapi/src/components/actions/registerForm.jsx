@@ -4,6 +4,7 @@ import React from "react";
 import apiURL from "../../apiUrl";
 import axiosInstance from "axios";
 import DarkContext from "./../../context/darkMode";
+import { Link } from "react-router-dom";
 
 export default class RegisterForm extends Form {
   state = {
@@ -54,12 +55,10 @@ export default class RegisterForm extends Form {
           <div
             className={
               "form-container border " +
-              `${darkContext.darkMode ? "bg-dark" : "bg-light"}`
+              `${darkContext.darkMode ? "bg-dark text-light" : "bg-light"}`
             }
           >
-            <h1 className={darkContext.darkMode ? "text-light" : ""}>
-              Register
-            </h1>
+            <h1>Register</h1>
             <form action="" onSubmit={this.handleSubmit}>
               {this.renderInput("email", "Email")}
               {this.renderInput("username", "Username")}
@@ -73,6 +72,9 @@ export default class RegisterForm extends Form {
               )}
               {this.renderButton("Register")}
             </form>
+            <p>
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
           </div>
         )}
       </DarkContext.Consumer>

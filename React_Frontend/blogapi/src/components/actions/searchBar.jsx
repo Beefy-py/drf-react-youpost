@@ -28,12 +28,14 @@ class SearchBar extends Component {
 
   goSearch = (e) => {
     e.preventDefault();
-    this.props.history.push({
-      pathname: "/search/",
-      search: "?search= " + this.state.searchValue,
-    });
+    if (this.state.searchValue) {
+      this.props.history.push({
+        pathname: "/search/",
+        search: "?search= " + this.state.searchValue,
+      });
 
-    window.location.reload();
+      window.location.reload();
+    }
   };
 
   render() {
@@ -71,7 +73,7 @@ class SearchBar extends Component {
                         }
                         key={post.id}
                       >
-                        <i className="fas fa-search-plus"></i>{" "}
+                        <i className="fas fa-search-plus"></i>
                         <p>{post.title}</p>
                       </li>
                     ))

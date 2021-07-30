@@ -50,7 +50,7 @@ export default class UpdatePost extends Form {
         content: this.state.data.content,
       })
       .then((res) => {
-        this.props.history.replace("/");
+        this.props.history.replace("/dashboard");
         console.log(res);
       })
       .catch((response) => console.log(response.response));

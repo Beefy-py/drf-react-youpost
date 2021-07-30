@@ -22,20 +22,6 @@ export default class PostDetail extends Component {
                     : "post-container"
                 }
               >
-                <div>
-                  {author === currentUserId ? (
-                    <React.Fragment>
-                      <Link to={"/update-post/" + slug}>
-                        <i className="fas fa-wrench"></i>
-                      </Link>
-                      <Link to={"/delete-post/" + slug}>
-                        <i className="fas fa-trash-alt"></i>
-                      </Link>
-                    </React.Fragment>
-                  ) : (
-                    ""
-                  )}
-                </div>
                 <div className="post-img-title">
                   <img
                     src="http://source.unsplash.com/random"
@@ -57,6 +43,20 @@ export default class PostDetail extends Component {
 
                 <hr />
                 <div className="post-content">{content}</div>
+                <React.Fragment>
+                  {author === currentUserId ? (
+                    <div className="actions">
+                      <Link to={"/update-post/" + slug}>
+                        <i className="fas fa-wrench"></i>
+                      </Link>
+                      <Link to={"/delete-post/" + slug}>
+                        <i className="fas fa-trash-alt"></i>
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </React.Fragment>
               </article>
             )}
           </UserContext.Consumer>

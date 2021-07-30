@@ -79,6 +79,73 @@ main .badge {
   font-size: 1rem;
 }
 
+.dashboard {
+  width: 90%;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+.dashboard .user-info {
+  grid-column: 1/3;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.dashboard .news {
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.dashboard .user-posts {
+  grid-column: 1/4;
+  display: grid;
+  grid-gap: 0.5rem;
+}
+
+.user-posts .manage-user-posts {
+  grid-column: 1/3;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.dashboard .user-posts .user-post {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+}
+
+.user-posts .user-post .title {
+  grid-column: 1/4;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.user-post .title a.text-light {
+  color: rgb(185, 185, 185) !important;
+}
+
+.user-posts .user-post .published {
+  grid-column: 4/7;
+  color: var(--secondary);
+}
+
+.user-posts .user-post .actions {
+  grid-column: 7;
+}
+
+.actions .fa-wrench {
+  color: var(--info);
+  margin-right: 0.5rem;
+}
+
+.actions .fa-trash-alt {
+  color: var(--danger);
+  margin-left: 0.5rem;
+}
+
 .searchbar {
   margin: 1rem auto;
   display: grid;
@@ -204,6 +271,10 @@ main .badge {
 
 .form-container button {
   margin-top: 0.5rem;
+}
+
+.form-container p {
+  margin: 1rem 0 0rem;
 }
 
 .update-cancel-post-container {

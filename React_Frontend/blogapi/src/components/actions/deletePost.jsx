@@ -19,6 +19,8 @@ export default class DeletePost extends Component {
 
   performDelete = () => {
     axiosInstance.delete("delete-post/" + this.props.match.params.slug);
+    this.props.history.replace("/dashboard");
+    window.location.reload();
   };
   render() {
     return (
@@ -50,13 +52,12 @@ export default class DeletePost extends Component {
               >
                 No
               </Link>
-              <Link
+              <button
                 className="btn btn-danger"
-                to="/"
                 onClick={() => this.performDelete()}
               >
                 Yes
-              </Link>
+              </button>
             </div>
           </div>
         )}
