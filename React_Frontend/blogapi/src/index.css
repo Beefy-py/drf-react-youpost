@@ -338,7 +338,57 @@ main .badge {
 .post-container {
   width: 70%;
   margin: 1rem auto;
-  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.post-container .fade {
+  height: 20vh;
+}
+
+.post-container h1 {
+  margin: 0;
+  padding: 1rem;
+  border-radius: 0.2rem 0.2rem 0 0;
+  z-index: 1;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.3),
+    rgba(0, 0, 0, 0.7)
+  );
+  color: aliceblue;
+  height: 100%;
+}
+
+.post-container .post-img-title {
+  grid-column: 2/6;
+  border-radius: 0.4rem;
+  position: relative;
+}
+
+.post-container .post-body {
+  margin-top: -2rem;
+  grid-column: 1/5;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  z-index: 2;
+  min-height: 40vh;
+}
+
+.post-container .post-body .post-content {
+  color: rgb(190, 190, 190);
+}
+
+.post-container .comments {
+  grid-column: 2/6;
+  min-height: 10vh;
+  margin-top: -2rem;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  z-index: 3;
 }
 
 .container-404 {

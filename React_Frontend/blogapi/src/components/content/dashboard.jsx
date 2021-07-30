@@ -33,7 +33,7 @@ export default class Dashboard extends Component {
             <div className="user-posts">
               <div className="manage-user-posts">
                 <Link to="/create-post">
-                  Post <i class="fas fa-plus-square"></i>
+                  Post <i className="fas fa-plus-square"></i>
                 </Link>
               </div>
               <UserPostsWrapper

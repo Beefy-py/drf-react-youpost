@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../context/userContext";
 import DarkContext from "./../../context/darkMode";
@@ -45,7 +45,7 @@ const Posts = ({ posts }) => {
                 className={
                   darkContext.darkMode
                     ? "card-body bg-dark text-light"
-                    : '"card-body bg-light text-dark"'
+                    : "card-body bg-light text-dark"
                 }
               >
                 <h5 className="card-title text-info">

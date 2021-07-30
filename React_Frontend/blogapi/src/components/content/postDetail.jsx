@@ -22,41 +22,65 @@ export default class PostDetail extends Component {
                     : "post-container"
                 }
               >
-                <div className="post-img-title">
+                <div
+                  className={
+                    darkContext.darkMode
+                      ? "dark-page-shadow post-img-title"
+                      : "post-img-title"
+                  }
+                >
+                  <h1>{title}</h1>
+
                   <img
                     src="http://source.unsplash.com/random"
                     className="card-img-top"
                     alt={"Image for: " + title}
                   />
-                  <h1>{title}</h1>
                 </div>
-                <span>
-                  <p>{userContext.getAuthor(author)}</p>
-                  <p>
-                    {published
-                      ? new Intl.DateTimeFormat("en-GB", {
-                          dateStyle: "full",
-                        }).format(new Date(published))
-                      : ""}
-                  </p>
-                </span>
+                <div
+                  className={
+                    darkContext.darkMode
+                      ? "post-body dark-page-shadow border bg-dark"
+                      : "post-body border bg-light"
+                  }
+                >
+                  <span>
+                    <p>{userContext.getAuthor(author)} published on</p>
+                    <p>
+                      {published
+                        ? new Intl.DateTimeFormat("en-GB", {
+                            dateStyle: "full",
+                          }).format(new Date(published))
+                        : ""}
+                    </p>
+                  </span>
+                  <hr />
+                  <div className="post-content">{content}</div>
 
-                <hr />
-                <div className="post-content">{content}</div>
-                <React.Fragment>
-                  {author === currentUserId ? (
-                    <div className="actions">
-                      <Link to={"/update-post/" + slug}>
-                        <i className="fas fa-wrench"></i>
-                      </Link>
-                      <Link to={"/delete-post/" + slug}>
-                        <i className="fas fa-trash-alt"></i>
-                      </Link>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </React.Fragment>
+                  <React.Fragment>
+                    {author === currentUserId ? (
+                      <div className="actions">
+                        <Link to={"/update-post/" + slug}>
+                          <i className="fas fa-wrench"></i>
+                        </Link>
+                        <Link to={"/delete-post/" + slug}>
+                          <i className="fas fa-trash-alt"></i>
+                        </Link>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </React.Fragment>
+                </div>
+                <div
+                  className={
+                    darkContext.darkMode
+                      ? "comments dark-page-shadow border bg-dark"
+                      : "comments border bg-light"
+                  }
+                >
+                  Comments
+                </div>
               </article>
             )}
           </UserContext.Consumer>
