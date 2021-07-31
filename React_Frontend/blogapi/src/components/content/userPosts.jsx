@@ -11,7 +11,7 @@ export default class UserPosts extends Component {
       <React.Fragment>
         {posts &&
           posts.map((post) => (
-            <DarkContext.Consumer>
+            <DarkContext.Consumer key={post.id}>
               {(darkContext) => (
                 <div
                   key={post.id}

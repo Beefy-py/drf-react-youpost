@@ -2,10 +2,32 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../context/userContext";
 import DarkContext from "./../../context/darkMode";
+import { render } from "@testing-library/react";
 
-const Posts = ({ posts }) => {
+const Posts = ({ posts, getPostsByTag }) => {
   const userContext = useContext(UserContext);
   const darkContext = useContext(DarkContext);
+
+  const renderTags = (tagList) => {
+    /* <button
+          onClick={getPostsByTag("latest")}
+          className={
+            darkContext.darkMode ? "badge badge-light" : "badge badge-dark"
+          }
+        >
+          latest
+        </button>
+      */
+    return tagList.map((tag) => (
+      <button
+        key={tag.id}
+        onClick={() => getPostsByTag(tag.id)}
+        className={"badge " + tag.styling}
+      >
+        {tag.name}
+      </button>
+    ));
+  };
 
   return (
     <main
@@ -14,13 +36,14 @@ const Posts = ({ posts }) => {
       }
     >
       <div className="post-tags">
-        <span
-          className={
-            darkContext.darkMode ? "badge badge-light" : "badge badge-dark"
-          }
-        >
-          latest
-        </span>
+        {renderTags([
+          { name: "latest", styling: "btn-primary", id: "Lat" },
+          { name: "most popular", styling: "btn-success", id: "MPo" },
+          { name: "least popular", styling: "btn-warning", id: "LPo" },
+          { name: "most upvotes", styling: "btn-info", id: "MUp" },
+          { name: "least upvotes", styling: "btn-danger", id: "LUp" },
+          { name: "oldest", styling: "btn-secondary", id: "Old" },
+        ])}
       </div>
 
       <section
@@ -33,7 +56,9 @@ const Posts = ({ posts }) => {
         {posts &&
           posts.map((post) => (
             <div
-              className={darkContext.darkMode ? "card-dark" : "card"}
+              className={
+                darkContext.darkMode ? "dark-page-shadow card" : "card"
+              }
               key={post.id}
             >
               <img
@@ -60,13 +85,7 @@ const Posts = ({ posts }) => {
                         ? "date-posted text-light"
                         : "date-posted text-dark"
                     }
-                  >
-                    <i>
-                      {new Intl.DateTimeFormat("en-GB", {
-                        dateStyle: "full",
-                      }).format(new Date(post.published))}
-                    </i>
-                  </span>
+                  ></span>
                   <br />
                   <span
                     className={

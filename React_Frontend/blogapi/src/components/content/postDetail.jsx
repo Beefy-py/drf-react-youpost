@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 
 export default class PostDetail extends Component {
   render() {
-    const { title, slug, author, content, published } = this.props.post;
+    const { title, category, slug, author, content, published } =
+      this.props.post;
 
     const accessToken = localStorage.getItem("access_token");
     const currentUserId = JSON.parse(atob(accessToken.split(".")[1])).user_id;

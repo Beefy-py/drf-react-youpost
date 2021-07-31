@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, filters, permissions
 from rest_framework.decorators import permission_classes
-from blog.models import Post
-from .serializers import PostSerializer
+from blog.models import Category, Post
+from .serializers import CategorySerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS, BasePermission
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
@@ -58,5 +58,10 @@ class DeletePost(generics.RetrieveDestroyAPIView):
     def get_object(self):
         item = self.kwargs.get('slug')
         return get_object_or_404(Post, slug=item)
-       
+    
+
+class CategoryList(generics.ListAPIView):
+    permission_classes =[permissions.IsAdminUser]
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
     

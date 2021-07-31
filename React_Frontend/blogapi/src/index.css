@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Lato&family=Permanent+Marker&family=Signika:wght@300;400&family=Varela+Round&display=swap");
 
 :root {
-  --dark-bg: #343a40;
+  --dark-bg: #191a1c;
 }
 
 * {
@@ -10,7 +10,11 @@
 }
 
 .dark-page-bg {
-  background-color: var(--dark-bg);
+  background-color: var(--dark-bg) !important;
+}
+
+.bg-dark {
+  background-color: #212529 !important;
 }
 
 body {
@@ -245,6 +249,19 @@ main .badge {
   padding-right: 0.5rem;
 }
 
+.post-tags {
+  padding: 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 0.5rem;
+}
+
+.posts-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
 .dropdown-menu .dropdown-item {
   background-color: white;
   color: black;
@@ -308,26 +325,16 @@ main .badge {
   margin: 0 2rem 0 2rem;
 }
 
-.post-tags {
-  padding: 1rem 0;
-}
-
-.posts-section {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
-}
-
 .dark-page-shadow {
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.card-dark {
-  border: 0.5px solid rgba(255, 255, 255, 0.137);
-}
-
 .card div {
   padding: 1rem;
+}
+
+.card-dark {
+  border: none !important;
 }
 
 .card-img-top {
