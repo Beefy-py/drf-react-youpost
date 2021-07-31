@@ -107,25 +107,25 @@ export default class App extends Component {
             <Header />
             {this.state.showSearchBar ? <SearchBar /> : ""}
             <Switch>
-              <PrivateRoute path="/search" component={SearchPage} />
-              <PrivateRoute
+              <IsAuthenticatedRoute path="/search" component={SearchPage} />
+              <IsAuthenticatedRoute
                 path="/posts/:slug"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 component={PostDetailWrapper}
               />
-              <PrivateRoute
+              <IsAuthenticatedRoute
                 path="/update-post/:slug"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 users={this.state.users}
                 component={UpdatePost}
               />
-              <PrivateRoute
+              <IsAuthenticatedRoute
                 path="/delete-post/:slug"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 users={this.state.users}
                 component={DeletePost}
               />
-              <PrivateRoute
+              <IsAuthenticatedRoute
                 path="/create-post"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 users={this.state.users}
@@ -149,18 +149,18 @@ export default class App extends Component {
                   />
                 )}
               />
-              <PrivateRoute
+              <IsAuthenticatedRoute
                 path="/logout"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 component={Logout}
               />
-              <PrivateRoute
+              <IsAuthenticatedRoute
                 exact
                 path="/dashboard"
                 toggleShowSearchBar={this.toggleShowSearchBar}
                 component={Dashboard}
               />
-              <PrivateRoute
+              <IsAuthenticatedRoute
                 exact
                 path="/"
                 toggleShowSearchBar={this.toggleShowSearchBar}
@@ -178,7 +178,7 @@ export default class App extends Component {
   }
 }
 
-const PrivateRoute = ({
+const IsAuthenticatedRoute = ({
   component: Component,
   toggleShowSearchBar,
   users,
@@ -191,6 +191,46 @@ const PrivateRoute = ({
     localStorage.getItem("refresh_token") === null
       ? false
       : true;
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        refreshToken ? (
+          <Component
+            {...props}
+            users={users}
+            toggleShowSearchBar={toggleShowSearchBar}
+          />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+};
+
+const PrivateAdminRoute = ({
+  component: Component,
+  toggleShowSearchBar,
+  users,
+  ...rest
+}) => {
+  // Add your own authentication on the below line.
+
+  const refreshToken =
+    localStorage.getItem("refresh_token") === "undefined" ||
+    localStorage.getItem("refresh_token") === null
+      ? false
+      : true;
+
+  const currentUserId = JSON.parse(
+    atob(localStorage.getItem("access_token").split(".")[1])
+  ).user_id;
+
+  console.log(users.filter((user) => user.id === currentUserId));
 
   return (
     <Route
