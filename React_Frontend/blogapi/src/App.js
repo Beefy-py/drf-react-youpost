@@ -27,6 +27,7 @@ import UpdatePost from "./components/actions/updatePost";
 import DeletePost from "./components/actions/deletePost";
 import Dashboard from "./components/content/dashboard";
 import axiosInstance from "./baseAxios";
+import AdminPage from "./components/admin/adminPage";
 
 export default class App extends Component {
   state = {
@@ -107,6 +108,13 @@ export default class App extends Component {
             <Header />
             {this.state.showSearchBar ? <SearchBar /> : ""}
             <Switch>
+              <PrivateAdminRoute
+                path="/admin"
+                toggleShowSearchBar={this.toggleShowSearchBar}
+                users={this.state.users}
+                component={AdminPage}
+              />
+
               <IsAuthenticatedRoute path="/search" component={SearchPage} />
               <IsAuthenticatedRoute
                 path="/posts/:slug"
@@ -225,29 +233,33 @@ const PrivateAdminRoute = ({
     localStorage.getItem("refresh_token") === null
       ? false
       : true;
+  const accessToken = localStorage.getItem("access_token");
 
-  const currentUserId = JSON.parse(
-    atob(localStorage.getItem("access_token").split(".")[1])
-  ).user_id;
+  if (!accessToken) return <Redirect to={"/"} />;
 
-  console.log(users.filter((user) => user.id === currentUserId));
+  const currentUserId = JSON.parse(atob(accessToken.split(".")[1])).user_id;
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        refreshToken ? (
-          <Component
-            {...props}
-            users={users}
-            toggleShowSearchBar={toggleShowSearchBar}
-          />
-        ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
+  const user = users.filter((user) => user.id === currentUserId)[0];
+
+  if (user) {
+    return (
+      <Route
+        {...rest}
+        render={(props) =>
+          refreshToken && user.is_superuser ? (
+            <Component
+              {...props}
+              users={users}
+              toggleShowSearchBar={toggleShowSearchBar}
+            />
+          ) : (
+            <Redirect
+              to={{ pathname: "/not-allowed", state: { from: props.location } }}
+            />
+          )
+        }
+      />
+    );
+  }
+  return null;
 };
