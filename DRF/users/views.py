@@ -7,7 +7,7 @@ from .serializers import RegisterUserSerializer, UserListSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from django.contrib.auth.models import User
+from .models import CustomUser
 
 
 # Create your views here.
@@ -34,9 +34,9 @@ class BlacklistTokenView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserListSerializer
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserListSerializer

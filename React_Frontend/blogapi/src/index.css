@@ -421,6 +421,16 @@ main .badge {
   font-size: 4.5rem;
 }
 
+.post-dark-loader span {
+  background-color: #212529 !important;
+  background-image: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 0%),
+    rgb(110 109 109 / 10%),
+    rgb(200 200 200 / 0.5%)
+  ) !important;
+}
+
 footer {
   width: 90%;
   margin: 0 auto;
