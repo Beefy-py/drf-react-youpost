@@ -412,13 +412,13 @@ main .badge {
 }
 
 .error-404 h1 {
-  font-size: 4rem;
+  font-size: 6rem;
   color: var(--danger);
 }
 
 .error-404 h1 i {
   padding: 0 1rem;
-  font-size: 3.5rem;
+  font-size: 4.5rem;
 }
 
 footer {

@@ -175,7 +175,7 @@ export default class App extends Component {
                 component={Body}
               />
               <Route path="*">
-                <NotFoundPage />
+                <NotFoundPage toggleShowSearchBar={this.toggleShowSearchBar} />
               </Route>
             </Switch>
             <Footer />
