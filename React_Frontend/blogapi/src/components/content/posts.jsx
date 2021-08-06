@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UserContext from "../../context/userContext";
 import DarkContext from "./../../context/darkMode";
 import { render } from "@testing-library/react";
+import { ReactDOM } from "react-dom";
 
 const Posts = ({ posts, getPostsByTag }) => {
   const userContext = useContext(UserContext);
@@ -29,6 +30,10 @@ const Posts = ({ posts, getPostsByTag }) => {
     ));
   };
 
+  const reactToPost = (postId, vote) => {
+    console.log("reacted to " + postId + " with " + vote);
+  };
+
   return (
     <main
       className={
@@ -40,8 +45,6 @@ const Posts = ({ posts, getPostsByTag }) => {
           { name: "latest", styling: "btn-primary", id: "Lat" },
           { name: "most popular", styling: "btn-success", id: "MPo" },
           { name: "least popular", styling: "btn-warning", id: "LPo" },
-          { name: "most upvotes", styling: "btn-info", id: "MUp" },
-          { name: "least upvotes", styling: "btn-danger", id: "LUp" },
           { name: "oldest", styling: "btn-secondary", id: "Old" },
         ])}
       </div>
@@ -54,60 +57,34 @@ const Posts = ({ posts, getPostsByTag }) => {
         }
       >
         {posts &&
-          posts.map((post) => (
-            <div
-              className={
-                darkContext.darkMode ? "dark-page-shadow card" : "card"
-              }
-              key={post.id}
-            >
-              <img
-                src="http://source.unsplash.com/random"
-                className="card-img-top"
-                alt={"Image for: " + post.title}
-              />
+          posts.map((post) => {
+            console.log(post.id);
+            if (post.id < 9) {
+            }
+            return (
               <div
                 className={
-                  darkContext.darkMode
-                    ? "card-body bg-dark text-light"
-                    : "card-body bg-light text-dark"
+                  darkContext.darkMode ? `dark-page-shadow card ` : `card`
                 }
+                key={post.id}
               >
-                <h5 className="card-title text-info">
-                  <Link to={"/posts/" + post.slug}>
-                    <b> {post.title}</b>
-                  </Link>
-                </h5>
+                <img
+                  src="http://source.unsplash.com/random"
+                  className="card-img-top"
+                  alt={"Image for: " + post.title}
+                />
+
                 <p>
-                  <span
-                    className={
-                      darkContext.darkMode
-                        ? "date-posted text-light"
-                        : "date-posted text-dark"
-                    }
-                  ></span>
-                  <br />
-                  <span
-                    className={
-                      darkContext.darkMode ? "text-light" : "text-dark"
-                    }
-                  >
-                    <b>
-                      {post.author
-                        ? userContext.getAuthor(post.author)
-                        : "Anonymous"}
-                    </b>
-                  </span>
+                  {post.title} {post.id}
                 </p>
-                <p className="card-text">
-                  {post.excerpt.substring(0, 150) + "..."}
-                </p>
+                <p>{post.rating}</p>
+
                 <Link to={"/posts/" + post.slug} className="btn btn-info">
-                  more...
+                  Read
                 </Link>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </section>
     </main>
   );

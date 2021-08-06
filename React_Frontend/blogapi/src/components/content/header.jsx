@@ -77,6 +77,7 @@ const Header = () => {
                 aria-expanded="false"
               >
                 {authorized ? localStorage.getItem("currentUser") : "Guest"}
+                {/*<i className="fas fa-crown"></i>*/}
               </NavLink>
               <ul
                 className={

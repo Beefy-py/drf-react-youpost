@@ -19,7 +19,6 @@ export default class UpdatePost extends Form {
         this.setState({
           data: {
             title: title,
-            excerpt: excerpt,
             content: content,
           },
         });
@@ -27,14 +26,13 @@ export default class UpdatePost extends Form {
   }
 
   state = {
-    data: { title: "", excerpt: "", content: "" },
+    data: { title: "", content: "" },
     errors: {},
     slug: "",
   };
 
   schema = {
     title: Joi.string().required().min(10).max(80).label("Title"),
-    excerpt: Joi.string().required().min(50).label("Excerpt"),
     content: Joi.string().required().min(100).label("Content"),
   };
 
@@ -46,7 +44,6 @@ export default class UpdatePost extends Form {
         author: this.props.users.filter(
           (user) => user.username == localStorage.getItem("currentUser")
         )[0].id,
-        excerpt: this.state.data.excerpt,
         content: this.state.data.content,
       })
       .then((res) => {
@@ -73,11 +70,6 @@ export default class UpdatePost extends Form {
             </h1>
             <form action="" onSubmit={this.handleSubmit}>
               {this.renderInput("title", "Title")}
-              {this.renderTextArea(
-                "excerpt",
-                "Excerpt",
-                "Short description of the actual content."
-              )}
               {this.renderTextArea("content", "Content")}
               <div className="update-cancel-post-container">
                 {this.renderButton("Update Post")}

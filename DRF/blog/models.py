@@ -14,15 +14,15 @@ class Category(models.Model):
 
 class Post(models.Model):
     options = (('draft', 'Draft'), ('published', 'Published'))
-
     category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1)
     title = models.CharField(max_length=250)
-    excerpt = models.TextField(null=True)
     content = models.TextField()
     slug = models.SlugField(max_length=250, unique_for_date='published', null=True, blank=True)
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blog_post')
     status = models.CharField(max_length=10, default='published', choices=options)
+    rating = models.IntegerField(default=0, null=True, blank=True)
+
 
     class Meta:
         ordering =  ('-published',)

@@ -33,7 +33,7 @@ export default class Logout extends Component {
             <UserContext.Consumer>
               {(userContext) => (
                 <p>
-                  Are you sure you want perform a logout for{" "}
+                  Are you sure you want perform a logout for
                   {userContext.currentUser
                     ? userContext.currentUser.name
                     : "Anonymous"}

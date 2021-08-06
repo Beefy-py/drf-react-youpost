@@ -35,7 +35,7 @@ class PostListDetailfilter(generics.ListAPIView):
     # '$' Regex search.
 
 class CreatePost(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
