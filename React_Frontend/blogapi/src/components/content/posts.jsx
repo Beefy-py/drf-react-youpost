@@ -1,15 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import UserContext from "../../context/userContext";
 import DarkContext from "./../../context/darkMode";
-import { render } from "@testing-library/react";
-import { ReactDOM } from "react-dom";
+import ReactPaginate from "react-paginate";
 
-const Posts = ({ posts, getPostsByTag }) => {
-  const userContext = useContext(UserContext);
-  const darkContext = useContext(DarkContext);
+export default class App extends Component {
+  state = { offset: 0, data: [], perPage: 6, currentPage: 0 };
 
-  const renderTags = (tagList) => {
+  componentDidMount() {
+    if (this.props.posts) {
+      this.receivedData();
+    }
+  }
+
+  renderTags = (tagList) => {
     /* <button
           onClick={getPostsByTag("latest")}
           className={
@@ -22,7 +25,7 @@ const Posts = ({ posts, getPostsByTag }) => {
     return tagList.map((tag) => (
       <button
         key={tag.id}
-        onClick={() => getPostsByTag(tag.id)}
+        onClick={() => this.props.getPostsByTag(tag.id)}
         className={"badge " + tag.styling}
       >
         {tag.name}
@@ -30,64 +33,137 @@ const Posts = ({ posts, getPostsByTag }) => {
     ));
   };
 
-  const reactToPost = (postId, vote) => {
+  reactToPost = (postId, vote) => {
     console.log("reacted to " + postId + " with " + vote);
   };
 
-  return (
-    <main
-      className={
-        darkContext.darkMode ? "bg-dark dark-page-shadow " : "bg-light border"
-      }
-    >
-      <div className="post-tags">
-        {renderTags([
-          { name: "latest", styling: "btn-primary", id: "Lat" },
-          { name: "most popular", styling: "btn-success", id: "MPo" },
-          { name: "least popular", styling: "btn-warning", id: "LPo" },
-          { name: "oldest", styling: "btn-secondary", id: "Old" },
-        ])}
-      </div>
+  receivedData() {
+    const data = this.props.posts;
+    const slice = data.slice(
+      this.state.offset,
+      this.state.offset + this.state.perPage
+    );
+    const postData = slice.map((post) => {
+      const { title, content, slug, author } = post;
+      const postDate = new Intl.DateTimeFormat("en-GB", {
+        month: "long",
+        year: "numeric",
 
-      <section
-        className={
-          darkContext.darkMode
-            ? "posts-section-dark posts-section"
-            : "posts-section"
-        }
-      >
-        {posts &&
-          posts.map((post) => {
-            console.log(post.id);
-            if (post.id < 9) {
-            }
-            return (
-              <div
-                className={
-                  darkContext.darkMode ? `dark-page-shadow card ` : `card`
-                }
-                key={post.id}
-              >
-                <img
-                  src="http://source.unsplash.com/random"
-                  className="card-img-top"
-                  alt={"Image for: " + post.title}
-                />
+        day: "numeric",
+      }).format(new Date(post.published));
 
-                <p>
-                  {post.title} {post.id}
-                </p>
-                <p>{post.rating}</p>
+      const day = new Date(postDate).toLocaleString("en-us", {
+        weekday: "long",
+      });
 
-                <Link to={"/posts/" + post.slug} className="btn btn-info">
-                  Read
-                </Link>
+      return (
+        <div className="blog-post border">
+          <div className="blog-post-img border">
+            <img
+              src="http://source.unsplash.com/random"
+              alt={"Image for: " + post.title}
+            />
+          </div>
+          <div className="blog-post-info">
+            <div className="blog-post-date">
+              <span>{day}</span>
+              <span>{postDate}</span>
+            </div>
+            <div className="blog-post-author">
+              <img src="bla" alt={"Image for " + { author }} />
+              <span>{author}</span>
+            </div>
+            <h1 className="blog-post-title">{title}</h1>
+            <p className="blog-post-text">
+              {content.length >= 500
+                ? content.substring(0, 500) + "..."
+                : content}
+            </p>
+            <Link to={"posts/" + slug} className="blog-post-cta">
+              Read More
+            </Link>
+          </div>
+          <div className="blog-post-options">upv downv share comment</div>
+        </div>
+      );
+    });
+
+    this.setState({
+      pageCount: Math.ceil(data.length / this.state.perPage),
+
+      postData,
+    });
+  }
+
+  handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    const offset = selectedPage * this.state.perPage;
+
+    this.setState({ currentPage: selectedPage, offset: offset }, () =>
+      this.receivedData()
+    );
+
+    window.scrollTo(0, 0);
+  };
+
+  render() {
+    const { posts } = this.props;
+    const { renderTags, reactToPost } = this;
+
+    return (
+      <DarkContext.Consumer>
+        {(darkContext) => (
+          <React.Fragment>
+            <main
+              className={
+                darkContext.darkMode
+                  ? "bg-dark dark-page-shadow "
+                  : "bg-light border"
+              }
+            >
+              <div className="post-tags">
+                {renderTags([
+                  { name: "latest", styling: "btn-primary", id: "Lat" },
+                  { name: "most popular", styling: "btn-success", id: "MPo" },
+                  { name: "least popular", styling: "btn-warning", id: "LPo" },
+                  { name: "oldest", styling: "btn-secondary", id: "Old" },
+                ])}
               </div>
-            );
-          })}
-      </section>
-    </main>
-  );
-};
 
-export default Posts;
+              <p className="sorted-by">
+                Sorted By: <i className="fas fa-filter"></i>{" "}
+                {this.props.curSorted}
+              </p>
+
+              <section
+                className={
+                  darkContext.darkMode
+                    ? "posts-section-dark posts-section"
+                    : "posts-section"
+                }
+              >
+                {this.state.postData}
+              </section>
+            </main>{" "}
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={3}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination justify-content-center"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-link"}
+              nextClassName={"page-link"}
+              activeClassName={"active"}
+            />
+          </React.Fragment>
+        )}
+      </DarkContext.Consumer>
+    );
+  }
+}

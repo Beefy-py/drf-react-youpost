@@ -12,6 +12,7 @@ const Body = ({ toggleShowSearchBar }) => {
   let history = useHistory();
 
   const PostLoading = PostLoadingComponent(Posts);
+  const [currentlySortedBy, setCurrentlySortedBy] = useState("latest");
   const [appState, setAppState] = useState({ loading: false, posts: null });
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const Body = ({ toggleShowSearchBar }) => {
 
   const getPosts = () => {
     setAppState({ loading: true });
+
     axiosInstance
       .get()
       .then((res) => setAppState({ loading: false, posts: res.data }));
@@ -33,24 +35,26 @@ const Body = ({ toggleShowSearchBar }) => {
     if (appState.posts) {
       if (tag === "Lat") {
         const filtered = allPosts.sort((p1, p2) => p2.id - p1.id);
-        console.log(filtered);
         setAppState({ posts: filtered });
+        setCurrentlySortedBy("latest");
       }
 
       if (tag === "Old") {
         const filtered = allPosts.sort((p1, p2) => p1.id - p2.id);
-        console.log(filtered);
         setAppState({ posts: filtered });
+        setCurrentlySortedBy("oldest");
       }
 
       if (tag === "MPo") {
         const filtered = allPosts.sort((p1, p2) => p2.rating - p1.rating);
         setAppState({ posts: filtered });
+        setCurrentlySortedBy("most popular");
       }
 
       if (tag === "LPo") {
         const filtered = allPosts.sort((p1, p2) => p1.rating - p2.rating);
         setAppState({ posts: filtered });
+        setCurrentlySortedBy("least popular");
       }
 
       /*
@@ -64,7 +68,6 @@ const Body = ({ toggleShowSearchBar }) => {
 
 
 */
-      console.log("display posts by " + tag);
       return "display posts by " + tag;
     }
   };
@@ -75,6 +78,7 @@ const Body = ({ toggleShowSearchBar }) => {
       getPostsByTag={getPostsByTag}
       isLoading={appState.loading}
       posts={appState.posts}
+      curSorted={currentlySortedBy}
     />
   );
 };
