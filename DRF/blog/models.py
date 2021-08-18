@@ -4,6 +4,12 @@ from django.db import models
 from users.models import CustomUser
 from django.utils import timezone
 from django.template.defaultfilters import slugify
+from django.utils.translation import gettext_lazy
+
+
+
+def upload_to(instance, filename):
+    return f'posts/{filename}'
 
 # Create your models here.
 class Category(models.Model):
@@ -16,6 +22,7 @@ class Post(models.Model):
     options = (('draft', 'Draft'), ('published', 'Published'))
     category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1)
     title = models.CharField(max_length=250)
+    image = models.ImageField(gettext_lazy('Image'), upload_to=upload_to, default='posts/default.jpg', blank=True)
     content = models.TextField()
     slug = models.SlugField(max_length=250, unique_for_date='published', null=True, blank=True)
     published = models.DateTimeField(default=timezone.now)

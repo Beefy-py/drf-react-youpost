@@ -44,25 +44,32 @@ export default class App extends Component {
       this.state.offset + this.state.perPage
     );
     const postData = slice.map((post) => {
-      const { title, content, slug, author } = post;
+      const { title, content, slug, author, image, rating } = post;
       const postDate = new Intl.DateTimeFormat("en-GB", {
         month: "long",
         year: "numeric",
-
         day: "numeric",
       }).format(new Date(post.published));
 
       const day = new Date(postDate).toLocaleString("en-us", {
         weekday: "long",
       });
-
+      // Would remove DRF/blog/migrations/0002_auto_20210815_1215.py
+      // Would remove DRF/blog/migrations/0003_alter_post_image.py
+      // Would remove DRF/blog/migrations/0004_alter_post_image.py
+      // Would remove DRF/blog/migrations/0005_alter_post_image.py
+      // Would remove DRF/blog/migrations/0006_alter_post_image.py
+      // Would remove DRF/blog/migrations/__pycache__/0002_auto_20210815_1215.cpython-38.pyc
+      // Would remove DRF/blog/migrations/__pycache__/0003_alter_post_image.cpython-38.pyc
+      // Would remove DRF/blog/migrations/__pycache__/0004_alter_post_image.cpython-38.pyc
+      // Would remove DRF/blog/migrations/__pycache__/0005_alter_post_image.cpython-38.pyc
+      // Would remove DRF/blog/migrations/__pycache__/0006_alter_post_image.cpython-38.pyc
+      // Would remove React_Frontend/blogapi/Pipfile
+      // Would remove React_Frontend/blogapi/Pipfile.lock
       return (
-        <div className="blog-post border">
+        <div className="blog-post border" key={post.id}>
           <div className="blog-post-img border">
-            <img
-              src="http://source.unsplash.com/random"
-              alt={"Image for: " + post.title}
-            />
+            <img src={image} alt={"Image for: " + post.title} />
           </div>
           <div className="blog-post-info">
             <div className="blog-post-date">
@@ -70,7 +77,7 @@ export default class App extends Component {
               <span>{postDate}</span>
             </div>
             <div className="blog-post-author">
-              <img src="bla" alt={"Image for " + { author }} />
+              <img src="" alt={"Image for " + { author }} />
               <span>{author}</span>
             </div>
             <h1 className="blog-post-title">{title}</h1>
@@ -83,7 +90,7 @@ export default class App extends Component {
               Read More
             </Link>
           </div>
-          <div className="blog-post-options">upv downv share comment</div>
+          <div className="blog-post-options">{rating ? rating : 0}</div>
         </div>
       );
     });
@@ -131,8 +138,10 @@ export default class App extends Component {
               </div>
 
               <p className="sorted-by">
-                Sorted By: <i className="fas fa-filter"></i>{" "}
-                {this.props.curSorted}
+                Sorted By:{" "}
+                <span>
+                  <i className="fas fa-filter"></i> {this.props.curSorted}
+                </span>
               </p>
 
               <section

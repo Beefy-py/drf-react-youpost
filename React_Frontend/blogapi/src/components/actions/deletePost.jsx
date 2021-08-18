@@ -40,8 +40,8 @@ export default class DeletePost extends Component {
                 </p>
               )}
             </UserContext.Consumer>
-            <div className="logout-action-wrapper">
-              <Link
+            <div className="delete-post-action-wrapper">
+              <button
                 className={
                   darkContext.darkMode
                     ? "btn btn-outline-light"
@@ -51,7 +51,7 @@ export default class DeletePost extends Component {
                 onClick={history.goBack}
               >
                 No
-              </Link>
+              </button>
               <button
                 className="btn btn-danger"
                 onClick={() => this.performDelete()}

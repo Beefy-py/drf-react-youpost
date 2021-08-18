@@ -3,12 +3,15 @@ import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
 import TextArea from "./textArea";
+import ImageField from "./imageField";
 
 export default class Form extends Component {
   state = {
     data: {},
     errors: {},
   };
+
+  chosenImg = "";
 
   validate = () => {
     const options = {
@@ -28,7 +31,10 @@ export default class Form extends Component {
     return errors;
   };
 
-  validateProperty = ({ name, value }) => {
+  validateProperty = ({ name, value, files }) => {
+    if (name === "image") {
+      value = files[0].name;
+    }
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
     const { error } = Joi.validate(obj, schema);
@@ -61,6 +67,10 @@ export default class Form extends Component {
     }
 
     const data = { ...this.state.data };
+
+    if (input.name === "image") {
+      this.chosenImg = input.files[0];
+    }
     data[input.name] = input.value;
 
     this.setState({ data, errors });
@@ -107,6 +117,22 @@ export default class Form extends Component {
         onChange={this.handleChange}
         error={errors[name]}
       ></Select>
+    );
+  }
+
+  renderImageField(name, label, accept, placeholder = name) {
+    const { data, errors } = this.state;
+    return (
+      <ImageField
+        name={name}
+        label={label}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
+        placeholder={placeholder}
+        type="file"
+        accept={accept}
+      ></ImageField>
     );
   }
 

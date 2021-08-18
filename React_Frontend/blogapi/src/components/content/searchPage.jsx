@@ -29,7 +29,7 @@ const SearchPage = () => {
           }
         >
           {posts.map((post) => {
-            const { title, id, author, published, excerpt } = post;
+            const { title, id, author, published, content } = post;
             return (
               <div className="post" key={id}>
                 <Link to={"/posts/" + post.slug}>
@@ -49,7 +49,7 @@ const SearchPage = () => {
                 </div>
                 <hr />
                 <p>
-                  {excerpt.substring(0, 150) + "..."}{" "}
+                  {content.substring(0, 150) + "..."}{" "}
                   <Link to={"/posts/" + post.slug}>
                     {" "}
                     <i className="fas fa-arrow-right"></i>
