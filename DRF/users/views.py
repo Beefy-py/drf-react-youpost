@@ -17,6 +17,9 @@ class RegisterUserView(APIView):
 
     def post(self, request):
         reg_seria = RegisterUserSerializer(data=request.data)
+
+        print(request.data)
+
         if reg_seria.is_valid():
             new_user = reg_seria.save()
             if new_user:

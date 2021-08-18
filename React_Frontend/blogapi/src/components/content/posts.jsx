@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DarkContext from "./../../context/darkMode";
 import ReactPaginate from "react-paginate";
+import UserContext from "./../../context/userContext";
 
 export default class App extends Component {
   state = { offset: 0, data: [], perPage: 6, currentPage: 0 };
+
+  static contextType = DarkContext;
 
   componentDidMount() {
     if (this.props.posts) {
@@ -54,31 +57,41 @@ export default class App extends Component {
       const day = new Date(postDate).toLocaleString("en-us", {
         weekday: "long",
       });
-      // Would remove DRF/blog/migrations/0002_auto_20210815_1215.py
-      // Would remove DRF/blog/migrations/0003_alter_post_image.py
-      // Would remove DRF/blog/migrations/0004_alter_post_image.py
-      // Would remove DRF/blog/migrations/0005_alter_post_image.py
-      // Would remove DRF/blog/migrations/0006_alter_post_image.py
-      // Would remove DRF/blog/migrations/__pycache__/0002_auto_20210815_1215.cpython-38.pyc
-      // Would remove DRF/blog/migrations/__pycache__/0003_alter_post_image.cpython-38.pyc
-      // Would remove DRF/blog/migrations/__pycache__/0004_alter_post_image.cpython-38.pyc
-      // Would remove DRF/blog/migrations/__pycache__/0005_alter_post_image.cpython-38.pyc
-      // Would remove DRF/blog/migrations/__pycache__/0006_alter_post_image.cpython-38.pyc
-      // Would remove React_Frontend/blogapi/Pipfile
-      // Would remove React_Frontend/blogapi/Pipfile.lock
+
+      console.log(image);
+
       return (
-        <div className="blog-post border" key={post.id}>
+        <div
+          className={
+            this.context.darkMode
+              ? "blog-post text-light border bg-dark"
+              : "blog-post border"
+          }
+          key={post.id}
+        >
           <div className="blog-post-img border">
             <img src={image} alt={"Image for: " + post.title} />
           </div>
           <div className="blog-post-info">
-            <div className="blog-post-date">
-              <span>{day}</span>
-              <span>{postDate}</span>
-            </div>
-            <div className="blog-post-author">
-              <img src="" alt={"Image for " + { author }} />
-              <span>{author}</span>
+            <div className="blog-post-date-author">
+              <div className="blog-post-date">
+                <span>{day}</span>
+                <span>{postDate}</span>
+              </div>
+              <div className="blog-post-author">
+                <UserContext.Consumer>
+                  {(userContext) => {
+                    userContext.getAuthorImage(author);
+
+                    return (
+                      <React.Fragment>
+                        <img src="" alt={"Image for " + { author }} />
+                        <span>{userContext.getAuthor(author)}</span>
+                      </React.Fragment>
+                    );
+                  }}
+                </UserContext.Consumer>
+              </div>
             </div>
             <h1 className="blog-post-title">{title}</h1>
             <p className="blog-post-text">
@@ -132,12 +145,16 @@ export default class App extends Component {
                 {renderTags([
                   { name: "latest", styling: "btn-primary", id: "Lat" },
                   { name: "most popular", styling: "btn-success", id: "MPo" },
-                  { name: "least popular", styling: "btn-warning", id: "LPo" },
-                  { name: "oldest", styling: "btn-secondary", id: "Old" },
+                  { name: "least popular", styling: "btn-danger", id: "LPo" },
+                  { name: "oldest", styling: "btn-warning", id: "Old" },
                 ])}
               </div>
 
-              <p className="sorted-by">
+              <p
+                className={
+                  darkContext.darkMode ? "sorted-by text-light" : "sorted-by"
+                }
+              >
                 Sorted By:{" "}
                 <span>
                   <i className="fas fa-filter"></i> {this.props.curSorted}
