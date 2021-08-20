@@ -14,15 +14,25 @@ export default class UpdatePost extends Form {
     axiosInstance
       .get(apiURL + "posts/" + this.props.match.params.slug)
       .then((res) => {
-        const { title, slug, excerpt, content } = res.data;
+        console.log(res.data);
+        const { title, slug, content } = res.data;
         this.setState({ slug: slug });
+
         this.setState({
           data: {
             title: title,
+
             content: content,
           },
         });
-      });
+      })
+      .catch((res) => console.log(res.response));
+
+    const BaseJoi = require("joi-browser");
+    const ImageExtension = require("joi-image-extension");
+
+    const Joi = BaseJoi.extend(ImageExtension);
+    this.setState({ joi: Joi });
   }
 
   state = {
@@ -33,19 +43,40 @@ export default class UpdatePost extends Form {
 
   schema = {
     title: Joi.string().required().min(10).max(80).label("Title"),
+    image: Joi.any()
+      .meta({ swaggerType: "file" })
+      .optional()
+      .description("Image File"),
     content: Joi.string().required().min(100).label("Content"),
   };
 
   afterSubmit = () => {
+    const { title, content } = this.state.data;
+
+    let formData = new FormData();
+
+    if (!this.chosenImg) {
+      this.chosenImg = "";
+    }
+
+    console.log(this.chosenImg);
+    const imgName = this.chosenImg ? this.chosenImg.name : "";
+
+    console.log(imgName);
+
+    formData.append("image", this.chosenImg);
+    formData.append("title", title);
+    formData.append("slug", "");
+    formData.append("content", content);
+    formData.append(
+      "author",
+      this.props.users.filter(
+        (user) => user.username == localStorage.getItem("currentUser")
+      )[0].id
+    );
+
     axiosInstance
-      .put("update-post/" + this.props.match.params.slug, {
-        title: this.state.data.title,
-        slug: "",
-        author: this.props.users.filter(
-          (user) => user.username == localStorage.getItem("currentUser")
-        )[0].id,
-        content: this.state.data.content,
-      })
+      .put("update-post/" + this.props.match.params.slug, formData)
       .then((res) => {
         this.props.history.replace("/dashboard");
         console.log(res);
@@ -70,6 +101,7 @@ export default class UpdatePost extends Form {
             </h1>
             <form action="" onSubmit={this.handleSubmit}>
               {this.renderInput("title", "Title")}
+              {this.renderImageField("image", "Choose Image Again", "image/*")}
               {this.renderTextArea("content", "Content")}
               <div className="update-cancel-post-container">
                 {this.renderButton("Update Post")}

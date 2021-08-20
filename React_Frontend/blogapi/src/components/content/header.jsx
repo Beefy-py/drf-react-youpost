@@ -53,11 +53,11 @@ const Header = () => {
                 Posts
               </NavLink>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink className="nav-link active" to="/create-post">
                 CreatePost
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item dark-mode-toggler">
               <i onClick={darkContext.toggleDarkMode}>
                 {darkContext.darkMode ? (

@@ -1,10 +1,9 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
+// import Joi from "./../../utils/extendedJoi";
 import DarkContext from "../../context/darkMode";
 import axiosInstance from "./../../baseAxios";
-import apiURL from "./../../apiUrl";
-import axios from "axios";
 
 export default class CreatePost extends Form {
   componentDidMount() {
@@ -33,11 +32,12 @@ export default class CreatePost extends Form {
     image: this.state.joi
       ? this.state.joi.image().label("Image")
       : Joi.string().label("Image"),
+    // image: Joi.image().label("Image"),
     content: Joi.string().required().min(100).label("Content"),
   };
 
   afterSubmit = () => {
-    const { title, image, content } = this.state.data;
+    const { title, content } = this.state.data;
 
     let formData = new FormData();
 

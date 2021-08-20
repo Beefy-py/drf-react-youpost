@@ -1,4 +1,3 @@
-from users.models import CustomUser
 from django.db import models
 
 from users.models import CustomUser
@@ -24,7 +23,7 @@ class Post(models.Model):
     title = models.CharField(max_length=250)
     image = models.ImageField(gettext_lazy('Image'), upload_to=upload_to, default='posts/default.jpg', blank=True)
     content = models.TextField()
-    slug = models.SlugField(max_length=250, unique_for_date='published', null=True, blank=True)
+    slug = models.SlugField(max_length=250, unique_for_date='published', null=True , blank=True)
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blog_post')
     status = models.CharField(max_length=10, default='published', choices=options)

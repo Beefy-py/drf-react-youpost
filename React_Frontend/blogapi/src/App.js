@@ -69,14 +69,6 @@ export default class App extends Component {
     }
   };
 
-  getAuthorImage = (pk) => {
-    if (pk) {
-      const user = this.state.users.find((user) => user.id === pk);
-      console.log("getting user:  --->", user);
-      return user.image;
-    }
-  };
-
   toggleDarkMode = () => {
     this.setState({ darkMode: !this.state.darkMode });
     this.makePageDark();
@@ -110,7 +102,6 @@ export default class App extends Component {
             currentUser: this.state.currentUser,
             onLogIn: this.handleLoggedIn,
             getAuthor: this.getAuthorById,
-            getAuthorImage: this.getAuthorImage,
           }}
         >
           <Router>

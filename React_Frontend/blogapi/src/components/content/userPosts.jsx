@@ -81,25 +81,33 @@ export default class UserPosts extends Component {
     const { posts } = this.props;
 
     return (
-      <React.Fragment>
-        {this.state.postData}{" "}
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={3}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={"pagination justify-content-center"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-link"}
-          nextClassName={"page-link"}
-          activeClassName={"active"}
-        />
-      </React.Fragment>
+      <DarkContext.Consumer>
+        {(darkContext) => (
+          <React.Fragment>
+            {this.state.postData}
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={3}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination justify-content-center"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={
+                darkContext.darkMode ? " bg-dark page-link" : "page-link"
+              }
+              nextClassName={
+                darkContext.darkMode ? " bg-dark page-link" : "page-link"
+              }
+              activeClassName={"active"}
+            />
+          </React.Fragment>
+        )}
+      </DarkContext.Consumer>
     );
   }
 }

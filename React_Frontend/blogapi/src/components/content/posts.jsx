@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import DarkContext from "./../../context/darkMode";
 import ReactPaginate from "react-paginate";
 import UserContext from "./../../context/userContext";
+import ReactTooltip from "react-tooltip";
+import axiosInstance from "./../../baseAxios";
 
 export default class App extends Component {
   state = { offset: 0, data: [], perPage: 6, currentPage: 0 };
@@ -40,6 +42,43 @@ export default class App extends Component {
     console.log("reacted to " + postId + " with " + vote);
   };
 
+  getFormattedRating = (rating) => {
+    if (rating > 999999999) {
+      const num = (rating / 1000000000).toFixed(1);
+      return `${num}B`;
+    }
+    if (rating > 999999) {
+      const num = (rating / 1000000).toFixed(1);
+      return `${num}M`;
+    }
+    if (rating > 999) {
+      const num = (rating / 1000).toFixed(1);
+      return `${num}K`;
+    }
+
+    return rating.toString();
+  };
+
+  likeDislike(post, action) {
+    if (action === "like") {
+      const postRate = parseInt(post.rating);
+      console.log(postRate, post.slug);
+
+      const restPost = {
+        title: post.title,
+        slug: post.slug,
+        content: post.content,
+        author: post.author,
+      };
+
+      console.log(restPost);
+      axiosInstance
+        .put("update-post/" + post.slug, { ...restPost, rating: postRate + 1 })
+        .then((res) => console.log(res.data))
+        .catch((res) => console.log(res.response));
+    }
+  }
+
   receivedData() {
     const data = this.props.posts;
     const slice = data.slice(
@@ -60,6 +99,21 @@ export default class App extends Component {
 
       console.log(image);
 
+      const dataType = this.context.darkMode ? "light" : "dark";
+
+      const toPass = {
+        title: title,
+        content: content,
+        slug: slug,
+        author: author,
+        image: image,
+        rating: rating,
+        postDate: postDate,
+        day: day,
+        dataType: dataType,
+        post: post,
+      };
+
       return (
         <div
           className={
@@ -69,30 +123,27 @@ export default class App extends Component {
           }
           key={post.id}
         >
+          <ReactTooltip />
           <div className="blog-post-img border">
-            <img src={image} alt={"Image for: " + post.title} />
+            <img src={image} alt={"Image for: " + title} />
           </div>
           <div className="blog-post-info">
-            <div className="blog-post-date-author">
-              <div className="blog-post-date">
-                <span>{day}</span>
-                <span>{postDate}</span>
-              </div>
-              <div className="blog-post-author">
-                <UserContext.Consumer>
-                  {(userContext) => {
-                    userContext.getAuthorImage(author);
-
-                    return (
-                      <React.Fragment>
-                        <img src="" alt={"Image for " + { author }} />
-                        <span>{userContext.getAuthor(author)}</span>
-                      </React.Fragment>
-                    );
-                  }}
-                </UserContext.Consumer>
-              </div>
+            <div className="blog-post-date">
+              <span>{day}</span>
+              <span>{postDate}</span>
             </div>
+            <div className="blog-post-author">
+              <UserContext.Consumer>
+                {(userContext) => {
+                  return (
+                    <React.Fragment>
+                      by <span>{userContext.getAuthor(author)}</span>
+                    </React.Fragment>
+                  );
+                }}
+              </UserContext.Consumer>
+            </div>
+
             <h1 className="blog-post-title">{title}</h1>
             <p className="blog-post-text">
               {content.length >= 500
@@ -103,7 +154,64 @@ export default class App extends Component {
               Read More
             </Link>
           </div>
-          <div className="blog-post-options">{rating ? rating : 0}</div>
+          <div className="blog-post-options">
+            <div className="react">
+              <div className="rating badge badge-primary">
+                <span
+                  data-tip={
+                    "rating: " +
+                    rating.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  data-type={dataType}
+                >
+                  {rating ? this.getFormattedRating(rating) : 0}
+                </span>
+              </div>
+              <div className="upvote">
+                <button
+                  className="btn btn-success"
+                  data-tip="like"
+                  data-type={dataType}
+                  onClick={() => this.likeDislike(post, "like")}
+                >
+                  <i className="fas fa-thumbs-up"></i>
+                </button>
+              </div>
+              <div className="downvote">
+                <button
+                  className="btn btn-danger"
+                  data-tip="dislike"
+                  data-type={dataType}
+                >
+                  <i className="fas fa-thumbs-down"></i>
+                </button>
+              </div>
+            </div>
+            <div className="other-react">
+              <div className="bookmark">
+                <button
+                  className="btn btn-info"
+                  data-tip="add to bookmarks"
+                  data-type={dataType}
+                >
+                  <i className="far fa-bookmark"></i>
+                  {/* <i className="fas fa-bookmark"></i> */}
+                </button>
+              </div>
+              <div
+                className="comment"
+                data-tip="comment on this post"
+                data-type={dataType}
+              >
+                <button className="btn btn-dark">
+                  <i
+                    style={{ fontSize: ".8rem" }}
+                    className="far fa-comment-alt"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       );
     });
@@ -129,6 +237,10 @@ export default class App extends Component {
   render() {
     const { posts } = this.props;
     const { renderTags, reactToPost } = this;
+
+    const pageLinkClassName = this.context.darkMode
+      ? " bg-dark page-link text-light"
+      : "page-link";
 
     return (
       <DarkContext.Consumer>
@@ -182,9 +294,9 @@ export default class App extends Component {
               onPageChange={this.handlePageClick}
               containerClassName={"pagination justify-content-center"}
               pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-link"}
-              nextClassName={"page-link"}
+              pageLinkClassName={pageLinkClassName}
+              previousClassName={pageLinkClassName}
+              nextClassName={pageLinkClassName}
               activeClassName={"active"}
             />
           </React.Fragment>

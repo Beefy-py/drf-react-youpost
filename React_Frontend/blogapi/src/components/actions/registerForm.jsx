@@ -16,10 +16,17 @@ export default class RegisterForm extends Form {
       lastname: "",*/
     },
     errors: {},
+    // joi: "",
   };
 
   componentDidMount() {
     this.props.toggleShowSearchBar(false);
+
+    // const BaseJoi = require("joi-browser");
+    // const ImageExtension = require("joi-image-extension");
+
+    // const Joi = BaseJoi.extend(ImageExtension);
+    // this.setState({ joi: Joi });
   }
 
   schema = {
@@ -42,6 +49,7 @@ export default class RegisterForm extends Form {
       })
       .then((res) => {
         this.props.history.replace("/");
+        window.location.reload();
       });
     console.log("Registered!");
   };

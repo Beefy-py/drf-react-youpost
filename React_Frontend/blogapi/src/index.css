@@ -312,17 +312,19 @@ main .badge {
   box-shadow: 0.5rem 0.5rem 3rem 1px rgba(0, 0, 0, 0.1);
 }
 
-.blog-post-date-author {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
 .blog-post-date span {
-  display: block;
   color: rgba(0, 0, 0, 0.5);
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0.5rem 0 0.5rem 0;
+}
+
+.blog-post-date span:first-child {
+  margin-right: 0.5rem;
+}
+
+.blog-post-author span {
+  font-weight: bold;
 }
 
 .blog-post.bg-dark .blog-post-date span {
@@ -334,6 +336,7 @@ main .badge {
   margin: 1.5rem 0 2rem;
   color: var(--info);
   font-weight: bolder;
+  text-transform: capitalize;
 }
 
 .blog-post-text {
@@ -367,6 +370,30 @@ main .badge {
   width: 60%;
   height: 100%;
   margin: 0 -2rem 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.blog-post-options .react {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: 30%;
+  text-align: center;
+  grid-gap: 0.2rem;
+}
+
+.blog-post-options .react .rating {
+  justify-self: center;
+  width: 4rem;
+  padding: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.blog-post-options .other-react {
+  text-align: center;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .posts-section .blog-post:nth-child(even) {
@@ -378,7 +405,7 @@ main .badge {
 }
 
 .posts-section .blog-post:nth-child(even) .blog-post-options {
-  margin: 0 0 0 -2rem;
+  margin: 0 0 0 -3rem;
 }
 
 .pagination .page-link {
@@ -393,9 +420,9 @@ main .badge {
 }
 
 .pagination .page-item.active .page-link {
-  background-color: var(--success);
-  border: none;
-  outline: none;
+  background-color: var(--success) !important;
+  outline: none !important;
+  height: 100%;
 }
 
 .pagination li:first-child {
@@ -624,10 +651,34 @@ footer {
   }
 
   .blog-post-options {
-    margin: 2rem 0 1rem;
-    padding: 0.5rem;
+    margin: 2rem 0 0;
     width: 100%;
-    height: 10%;
+    height: 0%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+  }
+
+  .posts-section .blog-post:nth-child(even) .blog-post-options {
+    margin: 2rem 0 0 0;
+  }
+
+  .blog-post-options .react {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .blog-post-options .react .rating {
+    margin: 0 1rem 0 0;
+  }
+
+  .blog-post-options .react .rating span {
+    vertical-align: sub;
+  }
+
+  .blog-post-options .other-react {
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
@@ -641,6 +692,10 @@ footer {
     max-width: 80rem;
     padding: 1.5rem;
     margin-top: 2rem;
+  }
+
+  .blog-post-options .other-react {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .blog-post-img {
@@ -659,6 +714,15 @@ footer {
 
   .blog-post {
     padding: 1rem;
+  }
+
+  .blog-post-options {
+    grid-template-columns: 1fr 1fr;
+    height: 8%;
+  }
+
+  .blog-post-options .other-react {
+    grid-column: 1;
   }
 }
 

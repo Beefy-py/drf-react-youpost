@@ -66,10 +66,10 @@ class UpdatePost(generics.RetrieveUpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PostSerializer
     lookup_field = "slug"
-
-    def get_object(self):
-        item = self.kwargs.get('slug')
-        return get_object_or_404(Post, slug=item)
+    queryset = Post.objects.all()
+    def patch(self, request, *args, **kwargs):
+        print(request.data)
+        return super().patch(request, *args, **kwargs)
     
 
 class DeletePost(generics.RetrieveDestroyAPIView):

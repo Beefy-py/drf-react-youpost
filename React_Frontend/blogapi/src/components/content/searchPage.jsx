@@ -52,7 +52,7 @@ const SearchPage = () => {
                   {content.substring(0, 150) + "..."}{" "}
                   <Link to={"/posts/" + post.slug}>
                     {" "}
-                    <i className="fas fa-arrow-right"></i>
+                    <i className="fas fa-info-circle"></i>
                   </Link>
                 </p>
               </div>
