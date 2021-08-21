@@ -383,9 +383,9 @@ main .badge {
   grid-gap: 0.2rem;
 }
 
-.blog-post-options .react .rating {
+.blog-post-options .react .rate {
   justify-self: center;
-  width: 4rem;
+  width: 4.5rem;
   padding: 0.4rem;
   margin-bottom: 1rem;
 }
@@ -668,11 +668,11 @@ footer {
     grid-template-columns: repeat(5, 1fr);
   }
 
-  .blog-post-options .react .rating {
+  .blog-post-options .react .rate {
     margin: 0 1rem 0 0;
   }
 
-  .blog-post-options .react .rating span {
+  .blog-post-options .react .rate span {
     vertical-align: sub;
   }
 
@@ -733,6 +733,43 @@ footer {
 }
 
 /* ---------------------------------------- extras ----------------------------------------*/
+
+/*------------------bg color styling rate------------------*/
+.rate1b {
+  background-color: #0a2766;
+}
+.rate1m {
+  background-color: #577590;
+}
+
+.rate100k {
+  background-color: #1d5040;
+}
+
+.rate1k {
+  background-color: #78c08e;
+}
+
+.rate0 {
+  background-color: rgb(179, 179, 179);
+}
+
+.rate-1k {
+  background-color: #f9c74f;
+}
+
+.rate-100k {
+  background-color: #eec029;
+}
+
+.rate-1m {
+  background-color: #f75f0e;
+}
+
+.rate-1b {
+  background-color: #fa3337;
+}
+
 .rm-box-shadow {
   box-shadow: none;
 }

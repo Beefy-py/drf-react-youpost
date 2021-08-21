@@ -16,21 +16,20 @@ export default class SingularPost extends Component {
     });
   }
 
-  likeDislike(post, value) {
+  changeRating(post, value) {
     const { rating } = this.state;
 
-    console.log("rating before", rating);
-
     this.setState({ rating: rating + value });
-
-    console.log("rating after", rating);
 
     const restPost = {
       title: post.title,
       slug: post.slug,
       content: post.content,
       author: post.author,
+      published: post.published,
     };
+
+    console.log(restPost.published);
 
     axiosInstance
       .put("update-post/" + post.slug, {
@@ -41,18 +40,19 @@ export default class SingularPost extends Component {
   }
 
   getRatingColor = (rate) => {
-    const prefix = "rating badge ";
+    const prefix = "rate badge ";
 
-    switch (rate) {
-      case rate > 999:
-        return prefix + "rating1000";
+    if (rate > 999999999) return prefix + "rate1b";
+    if (rate > 999999) return prefix + "rate1m";
+    if (rate > 99999) return prefix + "rate100k";
+    if (rate > 0) return prefix + "rate1k";
+    if (rate === 0) return prefix + "rate0";
+    if (rate < -999999999) return prefix + "rate-1b";
+    if (rate < -999999) return prefix + "rate-1m";
+    if (rate < -99999) return prefix + "rate-100k";
+    if (rate < 0) return prefix + "rate-1k";
 
-      case 0:
-        return prefix;
-
-      default:
-        return "rating badge badge-primary";
-    }
+    return prefix + "badge-primary";
   };
   render() {
     const {
@@ -77,7 +77,6 @@ export default class SingularPost extends Component {
             ? "blog-post text-light border bg-dark"
             : "blog-post border"
         }
-        key={post.id}
       >
         <ReactTooltip />
         <div className="blog-post-img border">
@@ -128,7 +127,7 @@ export default class SingularPost extends Component {
                 className="btn btn-success"
                 data-tip="like"
                 data-type={dataType}
-                onClick={() => this.likeDislike(post, 1)}
+                onClick={() => this.changeRating(post, 1)}
               >
                 <i className="fas fa-thumbs-up"></i>
               </button>
@@ -138,7 +137,7 @@ export default class SingularPost extends Component {
                 className="btn btn-danger"
                 data-tip="dislike"
                 data-type={dataType}
-                onClick={() => this.likeDislike(post, -1)}
+                onClick={() => this.changeRating(post, -1)}
               >
                 <i className="fas fa-thumbs-down"></i>
               </button>

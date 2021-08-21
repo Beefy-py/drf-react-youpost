@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import DarkContext from "./../../context/darkMode";
 import ReactPaginate from "react-paginate";
-import UserContext from "./../../context/userContext";
-import ReactTooltip from "react-tooltip";
-import axiosInstance from "./../../baseAxios";
 import SingularPost from "./singularPost";
 
 export default class App extends Component {
   state = { offset: 0, data: [], perPage: 6, currentPage: 0 };
+  static contextType = DarkContext;
 
   componentDidMount() {
     if (this.props.posts) {
@@ -17,15 +14,6 @@ export default class App extends Component {
   }
 
   renderTags = (tagList) => {
-    /* <button
-          onClick={getPostsByTag("latest")}
-          className={
-            darkContext.darkMode ? "badge badge-light" : "badge badge-dark"
-          }
-        >
-          latest
-        </button>
-      */
     return tagList.map((tag) => (
       <button
         key={tag.id}
@@ -42,7 +30,7 @@ export default class App extends Component {
   };
 
   getRatingSuffix = (rating) => {
-    if (rating > 999999999) {
+    if (rating > 999000000) {
       const num = (rating / 1000000000).toFixed(1);
       return `${num}B`;
     }
@@ -51,6 +39,20 @@ export default class App extends Component {
       return `${num}M`;
     }
     if (rating > 999) {
+      const num = (rating / 1000).toFixed(1);
+      return `${num}K`;
+    }
+
+    if (rating < -999999999) {
+      const num = (rating / 1000000000).toFixed(1);
+      return `${num}B`;
+    }
+    if (rating < -999999) {
+      const num = (rating / 1000000).toFixed(1);
+      return `${num}M`;
+    }
+
+    if (rating < -999) {
       const num = (rating / 1000).toFixed(1);
       return `${num}K`;
     }

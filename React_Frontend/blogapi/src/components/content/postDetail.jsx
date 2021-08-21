@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 
 export default class PostDetail extends Component {
   render() {
-    const { title, category, slug, author, content, published } =
-      this.props.post;
+    const { title, image, slug, author, content, published } = this.props.post;
 
     const accessToken = localStorage.getItem("access_token");
     const currentUserId = JSON.parse(atob(accessToken.split(".")[1])).user_id;
@@ -33,7 +32,7 @@ export default class PostDetail extends Component {
                   <h1>{title}</h1>
 
                   <img
-                    src="http://source.unsplash.com/random"
+                    src={image}
                     className="card-img-top"
                     alt={"Image for: " + title}
                   />
