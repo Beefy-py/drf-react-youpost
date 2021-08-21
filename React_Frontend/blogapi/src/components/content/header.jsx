@@ -58,15 +58,6 @@ const Header = () => {
                 CreatePost
               </NavLink>
             </li> */}
-            <li className="nav-item dark-mode-toggler">
-              <i onClick={darkContext.toggleDarkMode}>
-                {darkContext.darkMode ? (
-                  <i className="fas fa-moon"></i>
-                ) : (
-                  <i className="fas fa-sun"></i>
-                )}
-              </i>
-            </li>
             <li className="nav-item dropdown">
               <NavLink
                 className="nav-link dropdown-toggle"
@@ -107,7 +98,6 @@ const Header = () => {
                     </li>
                   </React.Fragment>
                 )}
-
                 <li>
                   <hr className="dropdown-divider"></hr>
                 </li>
@@ -115,6 +105,22 @@ const Header = () => {
                   <NavLink className={dropDownItemStyling} to="/">
                     <i className="fas fa-user-cog"></i> Settings
                   </NavLink>
+                </li>
+                <li
+                  className={dropDownItemStyling + " dark-mode-toggler"}
+                  onClick={darkContext.toggleDarkMode}
+                >
+                  {darkContext.darkMode ? (
+                    <React.Fragment>
+                      <i className="fas fa-sun"></i>
+                      <span>Light</span>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <i className="fas fa-moon"></i>
+                      <span>Dark</span>
+                    </React.Fragment>
+                  )}
                 </li>
               </ul>
             </li>

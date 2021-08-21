@@ -23,12 +23,12 @@ export default class Dashboard extends Component {
             <div
               className={
                 darkContext.darkMode
-                  ? "news border bg-dark text-light"
-                  : "news border bg-light"
+                  ? "posts-reacted border bg-dark text-light"
+                  : "posts-reacted border bg-light"
               }
             >
               <p>Notif new posts</p> <p>or subscribtions</p>
-              <p>And other news </p>
+              <p>And other reacted to </p>
             </div>
             <div className="user-posts">
               <div className="manage-user-posts">
