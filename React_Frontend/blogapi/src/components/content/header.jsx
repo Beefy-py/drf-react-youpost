@@ -67,6 +67,7 @@ const Header = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
+                <i className="fas fa-user-circle"></i>
                 {authorized ? localStorage.getItem("currentUser") : "Guest"}
                 {/*<i className="fas fa-crown"></i>*/}
               </NavLink>

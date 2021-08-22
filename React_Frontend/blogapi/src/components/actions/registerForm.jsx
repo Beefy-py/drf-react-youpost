@@ -49,8 +49,8 @@ export default class RegisterForm extends Form {
       })
       .then((res) => {
         this.props.history.replace("/");
-        window.location.reload();
-      });
+      })
+      .catch((res) => console.log(res.response));
     console.log("Registered!");
   };
 

@@ -23,6 +23,13 @@ export default class DeletePost extends Component {
     window.location.reload();
   };
   render() {
+    if (
+      this.state.post.author ===
+      JSON.parse(atob(localStorage.getItem("refresh_token").split(".")[1]))
+        .user_id
+    ) {
+      console.log("neeee mag niet!!!");
+    }
     return (
       <DarkContext.Consumer>
         {(darkContext) => (
@@ -52,12 +59,19 @@ export default class DeletePost extends Component {
               >
                 No
               </button>
-              <button
-                className="btn btn-danger"
-                onClick={() => this.performDelete()}
-              >
-                Yes
-              </button>
+              {this.state.post.author ===
+              JSON.parse(
+                atob(localStorage.getItem("refresh_token").split(".")[1])
+              ).user_id ? (
+                <button
+                  className="btn btn-danger"
+                  onClick={() => this.performDelete()}
+                >
+                  Yes
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         )}

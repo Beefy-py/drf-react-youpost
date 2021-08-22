@@ -83,20 +83,23 @@ export default class App extends Component {
       const dataType = this.context.darkMode ? "light" : "dark";
 
       return (
-        <SingularPost
-          title={title}
-          content={content}
-          slug={slug}
-          author={author}
-          image={image}
-          rating={rating}
-          postDate={postDate}
-          day={day}
-          dataType={dataType}
-          post={post}
-          getRatingSuffix={this.getRatingSuffix}
-          dataType={dataType}
-        />
+        <React.Fragment key={post.id}>
+          {" "}
+          <SingularPost
+            title={title}
+            content={content}
+            slug={slug}
+            author={author}
+            image={image}
+            rating={rating}
+            postDate={postDate}
+            day={day}
+            dataType={dataType}
+            post={post}
+            getRatingSuffix={this.getRatingSuffix}
+            dataType={dataType}
+          />
+        </React.Fragment>
       );
     });
 

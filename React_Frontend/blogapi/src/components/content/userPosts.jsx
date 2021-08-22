@@ -5,7 +5,7 @@ import DarkContext from "./../../context/darkMode";
 import ReactPaginate from "react-paginate";
 
 export default class UserPosts extends Component {
-  state = { offset: 0, data: [], perPage: 12, currentPage: 0 };
+  state = { offset: 0, data: [], perPage: 8, currentPage: 0 };
   componentDidMount() {
     if (this.props.posts) {
       this.getUserPosts();

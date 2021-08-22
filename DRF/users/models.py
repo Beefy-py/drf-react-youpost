@@ -13,4 +13,4 @@ class CustomUser(AbstractUser):
     liked = models.ManyToManyField('blog.Post', related_name='liked_posts', blank=True)
     disliked = models.ManyToManyField('blog.Post', related_name='disliked_posts', blank=True)
     bookmarked = models.ManyToManyField('blog.Post', related_name='bookmarked_posts', blank=True)
-    commmented = models.ManyToManyField('blog.Post', related_name='commented_on_posts', blank=True)
+    commented_on = models.ManyToManyField('blog.Post', related_name='commented_on_posts', blank=True,)

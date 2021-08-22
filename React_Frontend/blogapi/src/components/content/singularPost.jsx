@@ -49,12 +49,14 @@ export default class SingularPost extends Component {
     if (rate > 999999999) return prefix + "rate1b";
     if (rate > 999999) return prefix + "rate1m";
     if (rate > 99999) return prefix + "rate100k";
-    if (rate > 0) return prefix + "rate1k";
+    if (rate > 999) return prefix + "rate1k";
+    if (rate > 0) return prefix + "before1k";
     if (rate === 0) return prefix + "rate0";
     if (rate < -999999999) return prefix + "rate-1b";
     if (rate < -999999) return prefix + "rate-1m";
     if (rate < -99999) return prefix + "rate-100k";
-    if (rate < 0) return prefix + "rate-1k";
+    if (rate < -999) return prefix + "rate-1k";
+    if (rate < 0) return prefix + "before-1k";
 
     return prefix + "badge-primary";
   };
@@ -79,6 +81,7 @@ export default class SingularPost extends Component {
     )[0];
     return (
       <div
+        key={post.id}
         className={
           this.context.darkMode
             ? "blog-post text-light border bg-dark"
@@ -131,7 +134,7 @@ export default class SingularPost extends Component {
           {currentUser ? (
             <React.Fragment>
               {author === currentUser.id ? (
-                <i className="fas fa-user-check"></i>
+                <i className="fas fa-info-circle"></i>
               ) : (
                 <React.Fragment>
                   <div className="react">
