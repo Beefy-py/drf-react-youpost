@@ -20,7 +20,6 @@ class SearchBar extends Component {
 
     if (e.target.value !== "") {
       axiosInstance.get("search/?search=" + e.target.value).then((res) => {
-        console.log(res.data);
         this.setState({ searchResults: res.data });
       });
     }

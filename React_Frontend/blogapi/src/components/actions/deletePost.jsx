@@ -11,10 +11,18 @@ export default class DeletePost extends Component {
     axiosInstance
       .get("posts/" + this.props.match.params.slug)
       .then((res) => this.setState({ post: res.data }));
+
+    axiosInstance
+      .get("user/list/" + this.state.currentUserId)
+      .then((res) => this.setState({ currentUser: res.data }));
   }
 
   state = {
     post: {},
+    currentUserId: JSON.parse(
+      atob(localStorage.getItem("access_token").split(".")[1])
+    ).user_id,
+    currentUser: {},
   };
 
   performDelete = () => {
@@ -22,6 +30,31 @@ export default class DeletePost extends Component {
     this.props.history.replace("/dashboard");
     window.location.reload();
   };
+
+  renderYesBtn = () => {
+    const { post, currentUser, currentUserId } = this.state;
+
+    if (currentUserId !== post.author) {
+      if (currentUser.is_superuser) {
+        return (
+          <button
+            className="btn btn-danger"
+            onClick={() => this.performDelete()}
+          >
+            Yes
+          </button>
+        );
+      }
+      return "";
+    }
+
+    return (
+      <button className="btn btn-danger" onClick={() => this.performDelete()}>
+        Yes
+      </button>
+    );
+  };
+
   render() {
     if (
       this.state.post.author ===
@@ -59,7 +92,7 @@ export default class DeletePost extends Component {
               >
                 No
               </button>
-              {this.state.post.author ===
+              {/* {this.state.post.author ===
               JSON.parse(
                 atob(localStorage.getItem("refresh_token").split(".")[1])
               ).user_id ? (
@@ -71,7 +104,8 @@ export default class DeletePost extends Component {
                 </button>
               ) : (
                 ""
-              )}
+              )} */}
+              {this.renderYesBtn()}
             </div>
           </div>
         )}

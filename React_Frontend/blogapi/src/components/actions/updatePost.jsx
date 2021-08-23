@@ -14,7 +14,6 @@ export default class UpdatePost extends Form {
     axiosInstance
       .get(apiURL + "posts/" + this.props.match.params.slug)
       .then((res) => {
-        console.log(res.data);
         const { title, slug, content } = res.data;
         this.setState({ slug: slug });
 
@@ -61,8 +60,6 @@ export default class UpdatePost extends Form {
 
     console.log(this.chosenImg);
     const imgName = this.chosenImg ? this.chosenImg.name : "";
-
-    console.log(imgName);
 
     formData.append("image", this.chosenImg);
     formData.append("title", title);

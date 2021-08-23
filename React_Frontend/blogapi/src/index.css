@@ -834,28 +834,28 @@ footer {
 
 .rate0 {
   background-color: rgb(179, 179, 179);
+  color: #191a1c;
 }
 
 .before-1k {
-  background-color: #f1fc8d;
+  background-color: #f1b33e;
   color: black;
 }
 
 .rate-1k {
-  background-color: #fdc646;
-  color: black;
+  background-color: #ff971f;
 }
 
 .rate-100k {
-  background-color: #944e0d;
+  background-color: #d1530a;
 }
 
 .rate-1m {
-  background-color: #853408;
+  background-color: #e02b0b;
 }
 
 .rate-1b {
-  background-color: #fc1317;
+  background-color: #660405;
 }
 
 .rm-box-shadow {

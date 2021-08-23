@@ -40,6 +40,7 @@ class PostListDetailfilter(generics.ListAPIView):
 class CreatePost(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
+    serializer_class = PostSerializer
 
     def post(self, request, format=None):
         post = dict(request.data)

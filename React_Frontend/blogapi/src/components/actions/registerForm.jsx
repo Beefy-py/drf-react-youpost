@@ -48,9 +48,11 @@ export default class RegisterForm extends Form {
         password: this.state.data.password,
       })
       .then((res) => {
-        this.props.history.replace("/");
+        window.location.reload();
+        window.location.replace("/");
       })
       .catch((res) => console.log(res.response));
+
     console.log("Registered!");
   };
 

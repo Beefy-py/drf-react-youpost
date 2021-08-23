@@ -2,13 +2,60 @@ import React, { Component } from "react";
 import UserContext from "../../context/userContext";
 import DarkContext from "./../../context/darkMode";
 import { Link } from "react-router-dom";
+import axiosInstance from "./../../baseAxios";
 
 export default class PostDetail extends Component {
+  state = {
+    currentUserId: JSON.parse(
+      atob(localStorage.getItem("access_token").split(".")[1])
+    ).user_id,
+    postAuthorId: this.props.post.author,
+    currentUser: {},
+  };
+
+  componentDidMount() {
+    axiosInstance
+      .get("user/list/" + this.state.currentUserId)
+      .then((res) => this.setState({ currentUser: res.data }));
+  }
+
+  renderUpDel = () => {
+    const { currentUserId, postAuthorId, currentUser } = this.state;
+    const { slug } = this.props.post;
+
+    if (currentUserId !== postAuthorId) {
+      if (currentUser.is_superuser) {
+        console.log("admin has right to delete post.");
+        return (
+          <div className="actions">
+            <Link to={"/update-post/" + slug}>
+              <i className="fas fa-wrench"></i>
+            </Link>
+            <Link to={"/delete-post/" + slug}>
+              <i className="fas fa-trash-alt"></i>
+            </Link>
+          </div>
+        );
+      }
+      return "";
+    }
+
+    return (
+      <div className="actions">
+        <Link to={"/update-post/" + slug}>
+          <i className="fas fa-wrench"></i>
+        </Link>
+        <Link to={"/delete-post/" + slug}>
+          <i className="fas fa-trash-alt"></i>
+        </Link>
+      </div>
+    );
+  };
+
   render() {
-    const { title, image, slug, author, content, published } = this.props.post;
+    const { title, image, author, content, published } = this.props.post;
 
     const accessToken = localStorage.getItem("access_token");
-    const currentUserId = JSON.parse(atob(accessToken.split(".")[1])).user_id;
 
     return this.props.post ? (
       <DarkContext.Consumer>
@@ -66,7 +113,7 @@ export default class PostDetail extends Component {
                   </div>
 
                   <React.Fragment>
-                    {author === currentUserId ? (
+                    {/* {author === currentUserId ? (
                       <div className="actions">
                         <Link to={"/update-post/" + slug}>
                           <i className="fas fa-wrench"></i>
@@ -77,7 +124,8 @@ export default class PostDetail extends Component {
                       </div>
                     ) : (
                       ""
-                    )}
+                    )} */}
+                    {this.renderUpDel()}
                   </React.Fragment>
                 </div>
                 <div

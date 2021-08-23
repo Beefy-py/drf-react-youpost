@@ -11,7 +11,7 @@ export default class Logout extends Component {
 
   performLogout = () => {
     const response = axiosInstance.post("user/logout/blacklist/", {
-      refresh_token: localStorage.getItem("refresh_token"),
+      refresh: localStorage.getItem("refresh_token"),
     });
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");

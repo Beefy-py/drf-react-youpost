@@ -74,7 +74,7 @@ const Header = () => {
               <ul
                 className={
                   darkContext.darkMode
-                    ? "dropdown-menu bg-dark"
+                    ? "dropdown-menu bg-dark border"
                     : "dropdown-menu bg-light"
                 }
                 aria-labelledby="navbarDropdown"

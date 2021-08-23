@@ -6,7 +6,15 @@ import axiosInstance from "./../../baseAxios";
 import DarkContext from "./../../context/darkMode";
 
 export default class SingularPost extends Component {
-  state = { rating: 0, users: [] };
+  state = {
+    rating: 0,
+    users: [],
+    currentUserId: JSON.parse(
+      atob(localStorage.getItem("access_token").split(".")[1])
+    ).user_id,
+    currentUser: {},
+  };
+
   static contextType = DarkContext;
 
   componentDidMount() {
@@ -14,16 +22,17 @@ export default class SingularPost extends Component {
       this.setState({ users: res.data });
     });
 
-    axiosInstance.get("posts/" + this.props.post.slug).then((res) => {
-      console.log(res.data.title + " has rating: " + res.data.rating);
-      this.setState({ rating: res.data.rating });
-    });
+    axiosInstance
+      .get("posts/" + this.props.post.slug)
+      .then((res) => this.setState({ rating: res.data.rating }));
+
+    axiosInstance
+      .get("user/list/" + this.state.currentUserId)
+      .then((res) => this.setState({ currentUser: res.data }));
   }
 
   changeRating(post, value) {
-    const { rating } = this.state;
-
-    this.setState({ rating: rating + value });
+    const { rating, currentUser } = this.state;
 
     const restPost = {
       title: post.title,
@@ -33,14 +42,18 @@ export default class SingularPost extends Component {
       published: post.published,
     };
 
-    console.log(restPost.published);
+    console.log(currentUser.liked, post.id);
 
-    axiosInstance
-      .put("update-post/" + post.slug, {
-        ...restPost,
-        rating: rating + value,
-      })
-      .then((res) => console.log(res.data));
+    if (currentUser.liked.includes(post.id)) {
+      console.log("has already liuked");
+    }
+
+    this.setState({ rating: rating + value });
+
+    axiosInstance.put("update-post/" + post.slug, {
+      ...restPost,
+      rating: rating + value,
+    });
   }
 
   getRatingColor = (rate) => {
@@ -137,6 +150,7 @@ export default class SingularPost extends Component {
                 <i className="fas fa-info-circle"></i>
               ) : (
                 <React.Fragment>
+                  <ReactTooltip />
                   <div className="react">
                     <div className="upvote">
                       <button
