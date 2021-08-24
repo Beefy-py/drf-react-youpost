@@ -2,9 +2,41 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DarkContext from "../../context/darkMode";
 import UserPostsWrapper from "./userPostsWrapper";
+import axiosInstance from "./../../baseAxios";
 
 export default class Dashboard extends Component {
+  state = {
+    currentUserId: JSON.parse(
+      atob(localStorage.getItem("access_token").split(".")[1])
+    ).user_id,
+    currentUser: {},
+    posts: null,
+  };
+
+  componentDidMount() {
+    axiosInstance
+      .get("user/list/" + this.state.currentUserId)
+      .then((res) => this.setState({ currentUser: res.data }));
+    axiosInstance.get().then((res) => this.setState({ posts: res.data }));
+  }
+
+  renderPostById = (id) => {
+    if (this.state.posts) {
+      const post = this.state.posts.filter((post) => post.id === id)[0];
+      return post.title;
+    }
+  };
+
+  getPostSlug = (id) => {
+    if (!this.state.posts) return "";
+    const url =
+      "posts/" + this.state.posts.filter((post) => post.id === id)[0].slug;
+    if (url) return url;
+    return "";
+  };
+
   render() {
+    const { currentUser, posts } = this.state;
     return (
       <DarkContext.Consumer>
         {(darkContext) => (
@@ -12,7 +44,7 @@ export default class Dashboard extends Component {
             <div
               className={
                 darkContext.darkMode
-                  ? "user-info border bg-dark text-light"
+                  ? "user-info dark-page-shadow bg-dark text-light"
                   : "user-info border bg-light"
               }
             >
@@ -23,17 +55,85 @@ export default class Dashboard extends Component {
             <div
               className={
                 darkContext.darkMode
-                  ? "posts-reacted border bg-dark text-light"
+                  ? "posts-reacted dark-page-shadow bg-dark text-light"
                   : "posts-reacted border bg-light"
               }
             >
-              <p>Notif new posts</p> <p>or subscribtions</p>
-              <p>And other reacted to </p>
+              <div className="accordion">
+                <button className="btn btn-outline-dark">
+                  <span>posts liked</span>f
+                  <i className="fas fa-chevron-down"></i>
+                </button>
+                <div className="data">
+                  {currentUser.liked ? (
+                    <React.Fragment>
+                      {currentUser.liked.map((i) => (
+                        <p>
+                          <i className="fas fa-thumbs-up"></i> <span>|</span>
+                          <Link to={this.getPostSlug(i)}>
+                            {" "}
+                            {this.renderPostById(i)}
+                          </Link>
+                        </p>
+                      ))}
+                    </React.Fragment>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              <div className="accordion">
+                <button className="btn btn-outline-dark">
+                  <span>posts disliked</span>
+                  <i className="fas fa-chevron-down"></i>
+                </button>
+                <div className="data">
+                  {currentUser.disliked ? (
+                    <React.Fragment>
+                      {currentUser.disliked.map((i) => (
+                        <p>
+                          <i className="fas fa-thumbs-down"></i> <span>|</span>
+                          <Link to={this.getPostSlug(i)}>
+                            {" "}
+                            {this.renderPostById(i)}
+                          </Link>
+                        </p>
+                      ))}
+                    </React.Fragment>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              <div className="accordion">
+                <button className="btn btn-outline-dark">
+                  <span>posts bookmarked</span>
+                  <i className="fas fa-chevron-down"></i>
+                </button>
+                <div className="data">
+                  {currentUser.bookmarked ? (
+                    <React.Fragment>
+                      {currentUser.bookmarked.map((i) => (
+                        <p>
+                          <i className="fas fa-bookmark"></i> <span>|</span>
+                          <Link to={this.getPostSlug(i)}>
+                            {" "}
+                            {this.renderPostById(i)}
+                          </Link>
+                        </p>
+                      ))}
+                    </React.Fragment>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
             </div>
+
             <div className="user-posts">
               <div className="manage-user-posts">
                 <Link to="/create-post">
-                  Post <i className="fas fa-plus-square"></i>
+                  Post <i className="fas fa-plus-square"></i> <span>|</span>
                 </Link>
               </div>
               <UserPostsWrapper
