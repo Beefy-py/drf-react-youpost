@@ -11,6 +11,7 @@ export default class Dashboard extends Component {
     ).user_id,
     currentUser: {},
     posts: null,
+    dataClasses: { data1: "data", data2: "data", data3: "data" },
   };
 
   componentDidMount() {
@@ -35,8 +36,32 @@ export default class Dashboard extends Component {
     return "";
   };
 
+  toggleAccordion = (cl) => {
+    const { dataClasses } = this.state;
+    let newClasses = dataClasses;
+
+    if (newClasses[cl] === cl) {
+      newClasses[cl] = "data";
+    } else {
+      newClasses = { data1: "data", data2: "data", data3: "data" };
+      newClasses[cl] = cl;
+    }
+
+    this.setState({ dataClasses: newClasses });
+  };
+
+  renderChevron = (dcl) => {
+    const { dataClasses } = this.state;
+    if (dataClasses[dcl] === dcl) {
+      console.log(dcl);
+      return <i className="fas fa-chevron-up"></i>;
+    }
+
+    return <i className="fas fa-chevron-down"></i>;
+  };
+
   render() {
-    const { currentUser, posts } = this.state;
+    const { currentUser, posts, dataClasses } = this.state;
     return (
       <DarkContext.Consumer>
         {(darkContext) => (
@@ -60,11 +85,14 @@ export default class Dashboard extends Component {
               }
             >
               <div className="accordion">
-                <button className="btn btn-outline-dark">
-                  <span>posts liked</span>f
-                  <i className="fas fa-chevron-down"></i>
+                <button
+                  className="btn btn-dark"
+                  onClick={() => this.toggleAccordion("data1")}
+                >
+                  <span>posts liked</span>
+                  {this.renderChevron("data1")}
                 </button>
-                <div className="data">
+                <div className={dataClasses.data1}>
                   {currentUser.liked ? (
                     <React.Fragment>
                       {currentUser.liked.map((i) => (
@@ -83,11 +111,14 @@ export default class Dashboard extends Component {
                 </div>
               </div>
               <div className="accordion">
-                <button className="btn btn-outline-dark">
+                <button
+                  className="btn btn-dark"
+                  onClick={() => this.toggleAccordion("data2")}
+                >
                   <span>posts disliked</span>
-                  <i className="fas fa-chevron-down"></i>
+                  {this.renderChevron("data2")}
                 </button>
-                <div className="data">
+                <div className={dataClasses.data2}>
                   {currentUser.disliked ? (
                     <React.Fragment>
                       {currentUser.disliked.map((i) => (
@@ -106,11 +137,14 @@ export default class Dashboard extends Component {
                 </div>
               </div>
               <div className="accordion">
-                <button className="btn btn-outline-dark">
+                <button
+                  className="btn btn-dark"
+                  onClick={() => this.toggleAccordion("data3")}
+                >
                   <span>posts bookmarked</span>
-                  <i className="fas fa-chevron-down"></i>
+                  {this.renderChevron("data3")}
                 </button>
-                <div className="data">
+                <div className={dataClasses.data3}>
                   {currentUser.bookmarked ? (
                     <React.Fragment>
                       {currentUser.bookmarked.map((i) => (
