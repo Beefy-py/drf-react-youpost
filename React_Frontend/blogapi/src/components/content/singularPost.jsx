@@ -170,6 +170,7 @@ export default class SingularPost extends Component {
     const currentUser = this.state.users.filter(
       (user) => user.username == localStorage.getItem("currentUser")
     )[0];
+
     return (
       <div
         key={post.id}

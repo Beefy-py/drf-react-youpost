@@ -3,6 +3,8 @@ import UserContext from "../../context/userContext";
 import DarkContext from "./../../context/darkMode";
 import { Link } from "react-router-dom";
 import axiosInstance from "./../../baseAxios";
+import CommentsHeader from "./../actions/commentsHeader";
+import ScrollToTopBtn from "./../actions/scrollToTopBtn";
 
 export default class PostDetail extends Component {
   state = {
@@ -53,8 +55,20 @@ export default class PostDetail extends Component {
     );
   };
 
+  addComment = (comment) => {
+    const { comments } = this.state;
+    const { post } = this.props;
+    let newComments = comments;
+    newComments.push(comment);
+    this.setState({ comments: newComments });
+
+    console.log("Creating comment for post with slug: " + post.slug);
+  };
+
   render() {
     const { title, image, author, content, published } = this.props.post;
+
+    const { comments } = this.state;
 
     const accessToken = localStorage.getItem("access_token");
 
@@ -70,6 +84,7 @@ export default class PostDetail extends Component {
                     : "post-container"
                 }
               >
+                <ScrollToTopBtn showOn={500} />
                 <div
                   className={
                     darkContext.darkMode
@@ -137,7 +152,35 @@ export default class PostDetail extends Component {
                       : "comments border bg-light"
                   }
                 >
-                  Comments
+                  <CommentsHeader addComment={this.addComment} />
+                  <section>
+                    {comments.length ? (
+                      comments.map((comment, comId) => (
+                        <div
+                          key={comId}
+                          style={{ whiteSpace: "pre-wrap" }}
+                          className="singular-comment dark-page-shadow"
+                        >
+                          <React.Fragment>
+                            {author === comment.author ? (
+                              <p>
+                                {userContext.getAuthor(comment.author)}{" "}
+                                <i className="fas fa-user-check"></i>
+                              </p>
+                            ) : (
+                              <p>{userContext.getAuthor(comment.author)}</p>
+                            )}
+                          </React.Fragment>
+                          <hr />
+                          <p>{comment.text}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <h4>
+                        No Comments <i className="fas fa-comment-dots"></i>
+                      </h4>
+                    )}
+                  </section>
                 </div>
               </article>
             )}

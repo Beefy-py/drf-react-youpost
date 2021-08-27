@@ -187,7 +187,7 @@ export default class App extends Component {
               nextClassName={pageLinkClassName}
               activeClassName={"active"}
             />
-            <ScrollToTopBtn />
+            <ScrollToTopBtn showOn={2500} />
           </React.Fragment>
         )}
       </DarkContext.Consumer>

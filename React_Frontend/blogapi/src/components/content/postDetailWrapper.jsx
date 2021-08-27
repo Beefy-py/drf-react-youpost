@@ -21,7 +21,6 @@ const PostDetailWrapper = ({ toggleShowSearchBar, match }) => {
     axiosInstance
       .get(apiURL + "posts/" + match.params.slug)
       .then((res) => {
-        console.log(res.data);
         setAppState({ postIsLoading: false, post: res.data });
       })
       .catch((response) => {
