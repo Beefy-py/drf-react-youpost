@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import DarkContext from "../../context/darkMode";
 import UserPostsWrapper from "./userPostsWrapper";
 import axiosInstance from "./../../baseAxios";
+import UserInfo from "./userInfo";
 
 export default class Dashboard extends Component {
   state = {
@@ -62,21 +63,30 @@ export default class Dashboard extends Component {
 
   render() {
     const { currentUser, posts, dataClasses } = this.state;
+
+    let currentUserPosts;
+    let topPost = {};
+    if (posts) {
+      currentUserPosts = posts.filter(
+        (post) => post.author === this.state.currentUserId
+      );
+
+      topPost = currentUserPosts.sort((p1, p2) => p1.rating - p2.rating)[0];
+    }
+
+    console.log(topPost);
+
     return (
       <DarkContext.Consumer>
         {(darkContext) => (
           <div className="dashboard">
-            <div
-              className={
-                darkContext.darkMode
-                  ? "user-info dark-page-shadow bg-dark text-light"
-                  : "user-info border bg-light"
-              }
-            >
-              <h4>
-                Sort of user profile for {localStorage.getItem("currentUser")}
-              </h4>
-            </div>
+            {currentUser["id"] && (
+              <UserInfo
+                darkCnxt={darkContext}
+                currentUser={currentUser}
+                topPost={topPost}
+              />
+            )}
             <div
               className={
                 darkContext.darkMode
@@ -172,6 +182,7 @@ export default class Dashboard extends Component {
               </div>
               <UserPostsWrapper
                 toggleShowSearchBar={this.props.toggleShowSearchBar}
+                userPosts={currentUserPosts}
               ></UserPostsWrapper>
             </div>
           </div>

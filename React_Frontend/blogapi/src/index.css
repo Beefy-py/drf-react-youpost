@@ -119,13 +119,27 @@ main .badge {
   border-radius: 0.25rem;
 }
 
+.user-info h4 b {
+  color: var(--info);
+}
+
+.dashboard .user-info .more-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.dashboard .user-info .bio label {
+  display: none;
+}
+
 .dashboard .posts-reacted {
-  padding: 1rem;
+  position: relative;
   border-radius: 0.25rem;
+  padding: 1rem;
 }
 
 .posts-reacted .accordion {
-  margin: 0.3rem 0;
+  margin: 1rem 0;
   position: relative;
 }
 
@@ -646,7 +660,6 @@ main .badge {
 }
 
 .post-container {
-  width: 70%;
   margin: 1rem auto;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -693,7 +706,7 @@ main .badge {
 }
 
 .post-container .comments {
-  grid-column: 1/10;
+  grid-column: 2/12;
   min-height: 10vh;
   margin-top: 1rem;
   padding: 1rem;
@@ -742,6 +755,17 @@ footer {
 
 .footer-dark .border-bottom {
   border: none !important;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.scroll-to-top button:hover {
+  background: var(--bs-teal);
 }
 
 @media only screen and (max-width: 1024px) {

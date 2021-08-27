@@ -100,6 +100,8 @@ export default class SingularPost extends Component {
       ...restPost,
       rating: rating + value,
     });
+
+    window.location.replace("posts/" + post.slug);
   }
 
   addBookmark = (post) => {

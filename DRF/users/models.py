@@ -13,4 +13,5 @@ class CustomUser(AbstractUser):
     liked = models.ManyToManyField('blog.Post', related_name='liked_posts', blank=True)
     disliked = models.ManyToManyField('blog.Post', related_name='disliked_posts', blank=True)
     bookmarked = models.ManyToManyField('blog.Post', related_name='bookmarked_posts', blank=True)
+    bio = models.CharField(max_length=300, default='...', blank=True, null=True)
    

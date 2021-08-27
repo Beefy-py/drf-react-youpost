@@ -11,6 +11,7 @@ export default class PostDetail extends Component {
     ).user_id,
     postAuthorId: this.props.post.author,
     currentUser: {},
+    comments: [],
   };
 
   componentDidMount() {
@@ -103,6 +104,7 @@ export default class PostDetail extends Component {
                   </span>
                   <hr />
                   <div
+                    style={{ whiteSpace: "pre-wrap" }}
                     className={
                       darkContext.darkMode
                         ? "post-content"

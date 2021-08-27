@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DarkContext from "./../../context/darkMode";
 import ReactPaginate from "react-paginate";
 import SingularPost from "./singularPost";
+import ScrollToTopBtn from "../actions/scrollToTopBtn";
 
 export default class App extends Component {
   state = { offset: 0, data: [], perPage: 6, currentPage: 0 };
@@ -186,6 +187,7 @@ export default class App extends Component {
               nextClassName={pageLinkClassName}
               activeClassName={"active"}
             />
+            <ScrollToTopBtn />
           </React.Fragment>
         )}
       </DarkContext.Consumer>
