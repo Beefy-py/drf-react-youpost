@@ -51,7 +51,14 @@ export default class RegisterForm extends Form {
         window.location.reload();
         window.location.replace("/");
       })
-      .catch((res) => console.log(res.response));
+      .catch((res) => {
+        const errorUsername = res.response.data.username
+          ? res.response.data.username[0]
+          : "";
+
+        const errors400 = { ...this.state.errors, username: errorUsername };
+        this.setState({ errors: errors400 });
+      });
 
     console.log("Registered!");
   };

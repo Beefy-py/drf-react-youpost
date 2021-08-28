@@ -61,7 +61,14 @@ export default class CreatePost extends Form {
         this.props.history.replace("/dashboard");
         console.log(res);
       })
-      .catch((response) => console.log(response.response));
+      .catch((res) => {
+        const errorTitle = res.response.data.title
+          ? res.response.data.title[0]
+          : "";
+
+        const errors400 = { ...this.state.errors, title: errorTitle };
+        this.setState({ errors: errors400 });
+      });
   };
 
   afterChange(inp) {}

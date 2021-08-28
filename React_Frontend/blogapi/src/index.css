@@ -132,6 +132,10 @@ main .badge {
   color: var(--orange);
 }
 
+.dashboard .user-info hr {
+  margin: -0.5rem 0 1rem;
+}
+
 .dashboard .user-info .bio label {
   display: none;
 }

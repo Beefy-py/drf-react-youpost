@@ -48,15 +48,16 @@ class CreatePost(generics.CreateAPIView):
         new_post = post.copy()
 
         new_post['title'] = post['title'][0]
-        new_post['category'] = post['category'][0]
         new_post['author'] = post['author'][0]
         new_post['content'] = post['content'][0]
         new_post['image'] = post['image'][0]
-        new_post['rating'] = post['rating'][0]
-        new_post['status'] = post['status'][0]
+        # new_post['category'] = post['category'][0]
+        # new_post['rating'] = post['rating'][0]
+        # new_post['status'] = post['status'][0]
         new_post['slug'] = ''
 
         print(new_post)
+
         serializer = PostSerializer(data=new_post)
 
         if serializer.is_valid():
