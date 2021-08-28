@@ -54,7 +54,6 @@ export default class Dashboard extends Component {
   renderChevron = (dcl) => {
     const { dataClasses } = this.state;
     if (dataClasses[dcl] === dcl) {
-      console.log(dcl);
       return <i className="fas fa-chevron-up"></i>;
     }
 
@@ -73,8 +72,6 @@ export default class Dashboard extends Component {
 
       topPost = currentUserPosts.sort((p1, p2) => p1.rating - p2.rating)[0];
     }
-
-    console.log(topPost);
 
     return (
       <DarkContext.Consumer>
@@ -105,8 +102,8 @@ export default class Dashboard extends Component {
                 <div className={dataClasses.data1}>
                   {currentUser.liked ? (
                     <React.Fragment>
-                      {currentUser.liked.map((i) => (
-                        <p>
+                      {currentUser.liked.map((i, id) => (
+                        <p key={id}>
                           <i className="fas fa-thumbs-up"></i> <span>|</span>
                           <Link to={this.getPostSlug(i)}>
                             {" "}
@@ -131,8 +128,8 @@ export default class Dashboard extends Component {
                 <div className={dataClasses.data2}>
                   {currentUser.disliked ? (
                     <React.Fragment>
-                      {currentUser.disliked.map((i) => (
-                        <p>
+                      {currentUser.disliked.map((i, id) => (
+                        <p key={id}>
                           <i className="fas fa-thumbs-down"></i> <span>|</span>
                           <Link to={this.getPostSlug(i)}>
                             {" "}
@@ -157,8 +154,8 @@ export default class Dashboard extends Component {
                 <div className={dataClasses.data3}>
                   {currentUser.bookmarked ? (
                     <React.Fragment>
-                      {currentUser.bookmarked.map((i) => (
-                        <p>
+                      {currentUser.bookmarked.map((i, id) => (
+                        <p key={id}>
                           <i className="fas fa-bookmark"></i> <span>|</span>
                           <Link to={this.getPostSlug(i)}>
                             {" "}

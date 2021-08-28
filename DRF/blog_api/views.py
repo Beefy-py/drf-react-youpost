@@ -4,8 +4,8 @@ from rest_framework import serializers
 from rest_framework.decorators import parser_classes, permission_classes
 from rest_framework.serializers import Serializer
 from rest_framework.parsers import MultiPartParser, FormParser
-from blog.models import Category, Post
-from .serializers import CategorySerializer, PostSerializer
+from blog.models import Category, Comment, Post
+from .serializers import CategorySerializer, CommentSerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS, BasePermission
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
@@ -48,9 +48,12 @@ class CreatePost(generics.CreateAPIView):
         new_post = post.copy()
 
         new_post['title'] = post['title'][0]
+        new_post['category'] = post['category'][0]
         new_post['author'] = post['author'][0]
         new_post['content'] = post['content'][0]
         new_post['image'] = post['image'][0]
+        new_post['rating'] = post['rating'][0]
+        new_post['status'] = post['status'][0]
         new_post['slug'] = ''
 
         print(new_post)
@@ -68,6 +71,7 @@ class UpdatePost(generics.RetrieveUpdateAPIView):
     serializer_class = PostSerializer
     lookup_field = "slug"
     queryset = Post.objects.all()
+
     def patch(self, request, *args, **kwargs):
         print(request.data)
         return super().patch(request, *args, **kwargs)
@@ -81,7 +85,22 @@ class DeletePost(generics.RetrieveDestroyAPIView):
     def get_object(self):
         item = self.kwargs.get('slug')
         return get_object_or_404(Post, slug=item)
+
+
+class CommentList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
+
+class CommentListSpecificTo(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CommentSerializer
+    lookup_field = "pk"
     
+    def get_queryset(self):
+        return Post.objects.get(id=self.kwargs.get('pk')).comments.all()
+
 
 class CategoryList(generics.ListAPIView):
     permission_classes =[permissions.IsAdminUser]

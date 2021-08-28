@@ -85,7 +85,6 @@ export default class App extends Component {
 
       return (
         <React.Fragment key={post.id}>
-          {" "}
           <SingularPost
             title={title}
             content={content}

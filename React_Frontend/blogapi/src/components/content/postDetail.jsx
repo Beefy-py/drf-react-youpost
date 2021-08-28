@@ -20,6 +20,12 @@ export default class PostDetail extends Component {
     axiosInstance
       .get("user/list/" + this.state.currentUserId)
       .then((res) => this.setState({ currentUser: res.data }));
+
+    if (this.props.post) {
+      axiosInstance
+        .get("comments/" + this.props.post.id)
+        .then((res) => this.setState({ comments: res.data }));
+    }
   }
 
   renderUpDel = () => {
@@ -59,10 +65,12 @@ export default class PostDetail extends Component {
     const { comments } = this.state;
     const { post } = this.props;
     let newComments = comments;
-    newComments.push(comment);
+    newComments.unshift(comment);
     this.setState({ comments: newComments });
 
-    console.log("Creating comment for post with slug: " + post.slug);
+    axiosInstance
+      .post("comments/", { ...comment, post: post.id })
+      .catch((res) => console.log(res.response));
   };
 
   render() {
@@ -84,7 +92,7 @@ export default class PostDetail extends Component {
                     : "post-container"
                 }
               >
-                <ScrollToTopBtn showOn={500} />
+                <ScrollToTopBtn showOn={700} />
                 <div
                   className={
                     darkContext.darkMode
@@ -92,7 +100,9 @@ export default class PostDetail extends Component {
                       : "post-img-title"
                   }
                 >
-                  <h1>{title}</h1>
+                  <div className="image-overlay">
+                    <h1>{title}</h1>
+                  </div>
 
                   <img
                     src={image}
@@ -108,7 +118,10 @@ export default class PostDetail extends Component {
                   }
                 >
                   <span>
-                    <p>{userContext.getAuthor(author)} published on</p>
+                    <p>
+                      <b>{userContext.getAuthor(author)}</b>{" "}
+                      <span> published on</span>
+                    </p>
                     <p>
                       {published
                         ? new Intl.DateTimeFormat("en-GB", {
@@ -160,8 +173,9 @@ export default class PostDetail extends Component {
                           key={comId}
                           style={{ whiteSpace: "pre-wrap" }}
                           className="singular-comment dark-page-shadow"
+                          style={{ boxShadow: "1px 3px 5px rgb(0 0 0 / 20%)" }}
                         >
-                          <React.Fragment>
+                          <div className="comment-header">
                             {author === comment.author ? (
                               <p>
                                 {userContext.getAuthor(comment.author)}{" "}
@@ -170,7 +184,15 @@ export default class PostDetail extends Component {
                             ) : (
                               <p>{userContext.getAuthor(comment.author)}</p>
                             )}
-                          </React.Fragment>
+                            <p>
+                              {comment.posted
+                                ? new Intl.DateTimeFormat("en-GB", {
+                                    dateStyle: "long",
+                                    timeStyle: "short",
+                                  }).format(new Date(comment.posted))
+                                : ""}
+                            </p>
+                          </div>
                           <hr />
                           <p>{comment.text}</p>
                         </div>

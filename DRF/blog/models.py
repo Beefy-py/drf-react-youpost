@@ -25,10 +25,10 @@ class Post(models.Model):
     content = models.TextField()
     slug = models.SlugField(max_length=250, unique_for_date='published', null=True , blank=True)
     published = models.DateTimeField(default=timezone.now)
+    updated = models.DateTimeField(auto_now=True) 
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='blog_post')
     status = models.CharField(max_length=10, default='published', choices=options)
     rating = models.IntegerField(default=0, null=True, blank=True)
-
 
     class Meta:
         ordering =  ('-published',)
@@ -39,3 +39,18 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='comments')
+    text = models.TextField()
+    posted = models.DateTimeField(auto_now_add=True) 
+    updated = models.DateTimeField(auto_now=True) 
+    
+    class Meta: 
+        ordering = ('-posted',) 
+
+    def __str__(self):
+        return f'commented on {self.post} by {self.author}'
+

@@ -128,6 +128,10 @@ main .badge {
   grid-template-columns: 1fr 1fr;
 }
 
+.dashboard .user-info .more-info p:first-child span {
+  color: var(--orange);
+}
+
 .dashboard .user-info .bio label {
   display: none;
 }
@@ -669,21 +673,24 @@ main .badge {
   height: 20vh;
 }
 
-.post-container h1 {
+.post-container .image-overlay {
   margin: 0;
-  padding: 1rem;
-  border-radius: 0.2rem 0.2rem 0 0;
+  padding: 2rem;
+
   z-index: 1;
   position: absolute;
-  text-align: center;
   width: 100%;
   background: linear-gradient(
     to top,
     rgba(255, 255, 255, 0.1),
     rgba(0, 0, 0, 0.7)
   );
-  color: aliceblue;
   height: 100%;
+}
+
+.post-container h1 {
+  color: white;
+  text-align: center;
   text-transform: capitalize;
 }
 
@@ -700,6 +707,20 @@ main .badge {
   border-radius: 0.2rem;
   z-index: 2;
   min-height: 40vh;
+}
+
+.post-container .post-body span p {
+  display: inline;
+}
+
+.post-container .post-body span p:last-child {
+  padding-left: 0.5rem;
+  font-style: italic;
+}
+
+.post-container .post-body span p b {
+  font-size: 1.5rem;
+  padding-right: 0.5rem;
 }
 
 .post-container .post-body .post-content {
@@ -758,6 +779,24 @@ main .badge {
   padding: 0.5rem;
   border-radius: 0.3rem;
   background: #e7eaec;
+}
+
+.singular-comment .comment-header p:first-child {
+  color: var(--info);
+  padding-right: 1rem;
+}
+
+.singular-comment .comment-header p:last-child {
+  color: var(--secondary);
+}
+
+.singular-comment .comment-header p {
+  display: inline;
+}
+
+.comments section .singular-comment .fa-user-check {
+  opacity: 0.4;
+  padding-left: 0.5rem;
 }
 
 .post-container.text-light .comments section .singular-comment {
@@ -966,6 +1005,15 @@ footer {
 
   .form-container {
     width: 70%;
+  }
+
+  .post-container .post-body span p {
+    display: block;
+    padding: 0;
+  }
+
+  .post-container .post-body span span {
+    display: none;
   }
 }
 

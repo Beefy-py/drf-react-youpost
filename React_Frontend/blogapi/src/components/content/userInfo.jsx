@@ -19,7 +19,7 @@ export default class UserInfo extends Form {
   };
 
   schema = {
-    bio: Joi.string().min(20).max(300).label("Bio"),
+    bio: Joi.string().min(10).max(300).label("Bio"),
   };
 
   afterSubmit = () => {
@@ -28,12 +28,10 @@ export default class UserInfo extends Form {
     const { currentUser } = this.props;
 
     this.setState({ pageBio: bio });
-    axiosInstance
-      .put("user/list/" + currentUser.id, {
-        ...currentUser,
-        bio: bio,
-      })
-      .then((res) => console.log(res.data));
+    axiosInstance.put("user/list/" + currentUser.id, {
+      ...currentUser,
+      bio: bio,
+    });
 
     this.setState({ bioChangeActive: false });
   };
@@ -60,7 +58,16 @@ export default class UserInfo extends Form {
           Your profile: <b>{localStorage.getItem("currentUser")}</b>{" "}
         </h4>
         <div className="more-info">
-          <p>Joined on {currentUser.date_joined}</p>
+          <p>
+            Joined on{" "}
+            <span>
+              {currentUser.date_joined
+                ? new Intl.DateTimeFormat("en-GB", {
+                    dateStyle: "full",
+                  }).format(new Date(currentUser.date_joined))
+                : ""}
+            </span>
+          </p>
           <p>{currentUser.email}</p>
         </div>
         <hr />
