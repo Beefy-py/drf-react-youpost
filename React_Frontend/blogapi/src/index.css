@@ -4,6 +4,18 @@
   --dark-bg: #191a1c;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  /* background: linear-gradient(var(--success), var(--primary)); */
+  background: var(--primary);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.1rem;
+}
+
 * {
   transition: 0.15s;
   outline: none;
