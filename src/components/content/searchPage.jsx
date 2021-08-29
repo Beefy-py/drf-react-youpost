@@ -14,7 +14,6 @@ const SearchPage = () => {
   useEffect(() => {
     axios.get(apiURL + "search/" + window.location.search).then((res) => {
       setPosts(res.data);
-      console.log(res.data);
     });
   }, [setPosts]);
 

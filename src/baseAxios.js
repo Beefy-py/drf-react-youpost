@@ -3,7 +3,8 @@ import axios from "axios";
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-const baseURL = "https://blog-youpost.herokuapp.com/api/";
+// const baseURL = "https://blog-youpost.herokuapp.com/api/";
+const baseURL = "http://localhost:8000/api/";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
@@ -19,7 +20,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log(response)
     return response;
   },
   async function (error) {
@@ -27,7 +27,6 @@ axiosInstance.interceptors.response.use(
 
     if (typeof error.response === "undefined") {
 
-      console.log('using base url for axios requests: '+baseURL)
 
       alert(
         "A server/network error occurred. " +
