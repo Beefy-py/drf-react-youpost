@@ -24,6 +24,8 @@ axiosInstance.interceptors.response.use(
   async function (error) {
     const originalRequest = error.config;
 
+    console.log(error)
+
     if (typeof error.response === "undefined") {
 
       console.log('using base url for axios requests: '+baseURL)
