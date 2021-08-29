@@ -163,6 +163,8 @@ export default class SingularPost extends Component {
       getRatingSuffix,
     } = this.props;
 
+    console.log(post);
+
     const { likeClass, dislikeClass, bookmarkClass, bookmarkDataTip } =
       this.state;
 
