@@ -1,3 +1,3 @@
-const apiURL = "http://localhost:8000/api/";
+const apiURL = "http://blog-youpost.herokuapp.com/api/";
 
 export default apiURL;
