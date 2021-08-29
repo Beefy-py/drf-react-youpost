@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-const baseURL = "https://blog-youpost.herokuapp.com/api/";
+const baseURL = "http://blog-youpost.herokuapp.com/api/";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
@@ -19,12 +19,11 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => {
+    console.log(response)
     return response;
   },
   async function (error) {
     const originalRequest = error.config;
-
-    console.log(error)
 
     if (typeof error.response === "undefined") {
 
