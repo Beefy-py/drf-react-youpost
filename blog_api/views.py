@@ -1,4 +1,5 @@
 import os
+import logging
 
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, filters, permissions, status
@@ -14,6 +15,28 @@ from rest_framework.response import Response
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views import View
 
+
+class FrontendAppView(View):
+    """
+    Serves the compiled frontend entry point (only works if you have run `npm
+    build`).
+    """
+    index_file_path = os.path.join('build/index.html')
+
+    def get(self, request):
+        try:
+            with open(self.index_file_path) as f:
+                return HttpResponse(f.read())
+        except FileNotFoundError:
+            logging.exception('Production build of app not found')
+            return HttpResponse(
+                """
+                This URL is only used when you have built the production
+                version of the app. Visit http://localhost:3000/ instead after
+                running `npm start` on the directory that contains src, public and build folder.
+                """,
+                status=501,
+            )
 
 class PostList(generics.ListAPIView):   
     serializer_class = PostSerializer

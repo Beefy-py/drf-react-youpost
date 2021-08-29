@@ -1,6 +1,8 @@
 # core urls
+
+from blog_api.views import FrontendAppView
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path,include, re_path
 from rest_framework.schemas import get_schema_view
 from rest_framework.documentation import include_docs_urls
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
@@ -22,6 +24,9 @@ urlpatterns = [
         description='API API for BlogAPI',
         version='1.0.0',
     ),name='openapi_schema'),
+
+     re_path(r'^', FrontendAppView.as_view()),
+
     ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
