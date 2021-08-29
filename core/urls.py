@@ -25,7 +25,7 @@ urlpatterns = [
         version='1.0.0',
     ),name='openapi_schema'),
 
-    # re_path(r'^', FrontendAppView.as_view()),
+    re_path(r'^', FrontendAppView.as_view()),
 
     ]
 
