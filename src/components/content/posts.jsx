@@ -3,6 +3,7 @@ import DarkContext from "./../../context/darkMode";
 import ReactPaginate from "react-paginate";
 import SingularPost from "./singularPost";
 import ScrollToTopBtn from "../actions/scrollToTopBtn";
+import { Link } from 'react-router-dom';
 
 export default class App extends Component {
   state = { offset: 0, data: [], perPage: 6, currentPage: 0 };
@@ -63,6 +64,7 @@ export default class App extends Component {
 
   receivedData() {
     const data = this.props.posts;
+
     const slice = data.slice(
       this.state.offset,
       this.state.offset + this.state.perPage

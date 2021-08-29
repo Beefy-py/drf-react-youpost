@@ -11,15 +11,8 @@ def upload_to(instance, filename):
     return f'posts/{filename}'
 
 # Create your models here.
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
 class Post(models.Model):
     options = (('draft', 'Draft'), ('published', 'Published'))
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1)
     title = models.CharField(max_length=250, unique=True)
     image = models.ImageField(gettext_lazy('Image'), upload_to=upload_to, default='posts/default.jpg', blank=True)
     content = models.TextField()

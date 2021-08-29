@@ -7,8 +7,8 @@ from rest_framework import serializers
 from rest_framework.decorators import parser_classes, permission_classes
 from rest_framework.serializers import Serializer
 from rest_framework.parsers import MultiPartParser, FormParser
-from blog.models import Category, Comment, Post
-from .serializers import CategorySerializer, CommentSerializer, PostSerializer
+from blog.models import Comment, Post
+from .serializers import CommentSerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS, BasePermission
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
@@ -128,13 +128,6 @@ class CommentListSpecificTo(generics.ListAPIView):
     
     def get_queryset(self):
         return Post.objects.get(id=self.kwargs.get('pk')).comments.all()
-
-
-class CategoryList(generics.ListAPIView):
-    permission_classes =[permissions.IsAdminUser]
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()
-    
 
 
 class Assets(View):

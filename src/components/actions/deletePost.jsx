@@ -56,13 +56,6 @@ export default class DeletePost extends Component {
   };
 
   render() {
-    if (
-      this.state.post.author ===
-      JSON.parse(atob(localStorage.getItem("refresh_token").split(".")[1]))
-        .user_id
-    ) {
-      console.log("neeee mag niet!!!");
-    }
     return (
       <DarkContext.Consumer>
         {(darkContext) => (
