@@ -3,8 +3,10 @@ import axios from "axios";
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-// const baseURL = "https://blog-youpost.herokuapp.com/api/";
+
 const baseURL = "http://localhost:8000/api/";
+// const baseURL = "https://blog-youpost.herokuapp.com/api/";
+
 
 const axiosInstance = axios.create({
   baseURL: baseURL,

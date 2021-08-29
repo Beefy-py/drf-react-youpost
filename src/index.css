@@ -168,14 +168,19 @@ main .badge {
   width: 100%;
   border-radius: 0.2rem;
   text-align: left;
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(255, 255, 255, 0.45);
+  color: var(--dark);
+  border: none;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   padding: 0.3rem;
 }
 
 .posts-reacted .accordion button:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  border-bottom: 0.1rem solid var(--dark);
+   background-color: rgb(221, 221, 221);
+   border-bottom-left-radius: 0;
+   border-bottom-right-radius: 0;
 }
 
 .posts-reacted .accordion button span {
@@ -233,13 +238,15 @@ main .badge {
 
 .posts-reacted.bg-dark .accordion button {
   color: rgba(220, 220, 220, 0.8);
-  background-color: rgba(95, 95, 95, 0.3);
+  background:none;
 }
 
 .posts-reacted.bg-dark .accordion button:hover {
-  border: 0.1rem solid white;
-  border-radius: 0.2rem;
+  border: none;
+  border-bottom: 0.1rem solid white;
   background-color: rgba(0, 0, 0, 0.2);
+  border-top-right-radius: .2rem;
+  border-top-left-radius: .2rem;
 }
 
 .dashboard .user-posts {
