@@ -1,6 +1,2 @@
-C:\Users\kenny\Projects\DjangoTutorials\DRF_React_Project\React_Frontend\.vscode
-core\.env
-
-C:\Users\kenny\Projects\DjangoTutorials\DRF_React_Project\React_Frontend\blogapi\node_modules
-C:\Users\kenny\Projects\DjangoTutorials\DRF_React_Project\React_Frontend\node_modules
-React_Frontend/blogapi/node_modules/
+.vscode
+.env
