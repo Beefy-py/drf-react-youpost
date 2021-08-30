@@ -216,13 +216,13 @@ export default class SingularPost extends Component {
         <div className="blog-post-options">
           <div className={this.getRatingColor(rating)}>
             <span
-              data-tip={rating?    "rating: " +
-                rating.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):''
+              data-tip={"rating: " +
+                rating.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
              
               }
               data-type={dataType}
             >
-              {rating ? getRatingSuffix(rating):''}
+              {getRatingSuffix(rating)}
             </span>
           </div>
           {currentUser ? (

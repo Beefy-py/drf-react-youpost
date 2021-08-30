@@ -80,6 +80,8 @@ export default class PostDetail extends Component {
 
     const accessToken = localStorage.getItem("access_token");
 
+    console.log(this.props.post)
+
     return this.props.post ? (
       <DarkContext.Consumer>
         {(darkContext) => (
