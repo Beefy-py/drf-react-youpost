@@ -14,31 +14,33 @@ import os
 import django_heroku
 import dj_database_url
 import dotenv
+import environ
 
 from pathlib import Path
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DEBUG = True
 
 dotenv_file = os.path.join(BASE_DIR, ".env") # .encode('utf-16')
 
 if os.path.isfile(dotenv_file):
+    DEBUG = False
     dotenv.load_dotenv(dotenv_file, encoding='utf-16')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# env =environ.Env()
+env =environ.Env()
 
-# environ.Env.read_env()
+environ.Env.read_env()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY ='django-insecure-r))47^t1^81tlxtd=tfp2m=#082-o$)k1vn@jg1ym(pv9uzn=i'
+SECRET_KEY =os.environ.get('SECRET_KEY', os.environ['SECRET_KEY'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -62,10 +64,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
+    'whitenoise',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware','whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -148,17 +152,18 @@ AUTH_USER_MODEL='users.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS =[os.path.join(BASE_DIR, 'build/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 
-# WHITENOISE_ROOT = 'build' / 'root'
+#WHITENOISE_ROOT = 'build' / 'root'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],

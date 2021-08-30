@@ -25,8 +25,9 @@ urlpatterns = [
         version='1.0.0',
     ),name='openapi_schema'),
 
-    re_path(r'^', FrontendAppView.as_view()),
+    # re_path(r'^', FrontendAppView.as_view()),
 
     ]
 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -163,12 +163,11 @@ export default class SingularPost extends Component {
       getRatingSuffix,
     } = this.props;
 
-    console.log(post);
-
     const { likeClass, dislikeClass, bookmarkClass, bookmarkDataTip } =
       this.state;
 
-    const rating = this.state.rating;
+    const rating = this.state.rating? this.state.rating:0;
+
     const currentUser = this.state.users.filter(
       (user) => user.username == localStorage.getItem("currentUser")
     )[0];

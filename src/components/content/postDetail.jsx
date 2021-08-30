@@ -22,10 +22,12 @@ export default class PostDetail extends Component {
       .then((res) => this.setState({ currentUser: res.data }));
 
     if (this.props.post) {
-      axiosInstance
+     if (this.props.post.id){
+        axiosInstance
         .get("comments/" + this.props.post.id)
         .then((res) => this.setState({ comments: res.data }));
     }
+     }
   }
 
   renderUpDel = () => {
@@ -80,7 +82,7 @@ export default class PostDetail extends Component {
 
     const accessToken = localStorage.getItem("access_token");
 
-    console.log(this.props.post)
+    console.log(this.props.post);
 
     return this.props.post ? (
       <DarkContext.Consumer>

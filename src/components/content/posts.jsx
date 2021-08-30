@@ -82,6 +82,7 @@ export default class App extends Component {
       });
 
       console.log(image);
+      console.log(post)
 
       const dataType = this.context.darkMode ? "light" : "dark";
 
