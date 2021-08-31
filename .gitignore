@@ -2,3 +2,4 @@
 .env
 core\__pycache__
 db.sqlite3
+node_modules

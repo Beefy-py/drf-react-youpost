@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Skeleton from "@yisheng90/react-loading";
 import DarkContext from "./../../context/darkMode";
+import Spinner from 'react-bootstrap/Spinner'
 
 /*<Spinner animation="grow" variant="primary" />*/
 
@@ -27,7 +28,7 @@ const PostLoading = (Component) => {
     }
 
     if (props.textLoad){
-      return <p>{props.textLoad} ...</p>
+      return <p>{props.textLoad}  <Spinner animation="border" size="sm" variant='info'/></p>
     }
 
     return <React.Fragment>{renderLoadingBars(rows)}</React.Fragment>;
