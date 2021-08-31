@@ -62,6 +62,9 @@ export default class CreatePost extends Form {
         console.log(res);
       })
       .catch((res) => {
+
+        console.log(res.response)
+
         const errorTitle = res.response.data.title
           ? res.response.data.title[0]
           : "";

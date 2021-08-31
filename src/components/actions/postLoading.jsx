@@ -28,7 +28,7 @@ const PostLoading = (Component) => {
     }
 
     if (props.textLoad){
-      return <p>{props.textLoad}  <Spinner animation="border" size="sm" variant='info'/></p>
+      return <div> <p className={darkContext.darkMode? 'text-light':''}>{props.textLoad}</p> <Spinner animation="border" size="sm" variant='info'/></div>
     }
 
     return <React.Fragment>{renderLoadingBars(rows)}</React.Fragment>;
