@@ -21,7 +21,7 @@ import DarkContext from "./context/darkMode";
 import apiURL from "./apiUrl";
 import axios from "axios";
 import SearchBar from "./components/actions/searchBar";
-import PostDetailWrapper from "./components/content/postDetailWrapper";
+import PostDetail from "./components/content/postDetail";
 import NotFoundPage from "./components/content/notFoundPage";
 import UpdatePost from "./components/actions/updatePost";
 import DeletePost from "./components/actions/deletePost";
@@ -119,7 +119,7 @@ export default class App extends Component {
               <IsAuthenticatedRoute
                 path="/posts/:slug"
                 toggleShowSearchBar={this.toggleShowSearchBar}
-                component={PostDetailWrapper}
+                component={PostDetail}
               />
               <IsAuthenticatedRoute
                 path="/update-post/:slug"

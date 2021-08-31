@@ -32,7 +32,7 @@ const UserPostsWrapper = ({ toggleShowSearchBar }) => {
   }, [setAppState]);
 
   return (
-    <PostLoading rows={1} isLoading={appState.loading} posts={appState.posts} />
+    <PostLoading rows={1} textLoad={'Loading Your Posts'} isLoading={appState.loading} posts={appState.posts} />
   );
 };
 

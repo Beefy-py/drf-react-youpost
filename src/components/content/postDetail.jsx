@@ -6,35 +6,45 @@ import axiosInstance from "./../../baseAxios";
 import CommentsHeader from "./../actions/commentsHeader";
 import ScrollToTopBtn from "./../actions/scrollToTopBtn";
 
+
 export default class PostDetail extends Component {
   state = {
     currentUserId: JSON.parse(
       atob(localStorage.getItem("access_token").split(".")[1])
     ).user_id,
-    postAuthorId: this.props.post.author,
     currentUser: {},
-    comments: [],
+    comments:[],
+    post:{},
   };
 
   componentDidMount() {
+
+     axiosInstance
+      .get("posts/" + this.props.match.params.slug)
+      .then((res) => {
+        this.setState({post: res.data});
+        axiosInstance
+          .get("comments/" +res.data.id)
+          .then((resp) => {this.setState({comments:resp.data}); console.log(resp.data)})
+      })
+      .catch((response) => {
+        console.log(response.response);
+        if (response.response.status === 404) {
+          window.location.replace("/*");
+        }
+      });
+
     axiosInstance
       .get("user/list/" + this.state.currentUserId)
       .then((res) => this.setState({ currentUser: res.data }));
 
-    if (this.props.post) {
-     if (this.props.post.id){
-        axiosInstance
-        .get("comments/" + this.props.post.id)
-        .then((res) => this.setState({ comments: res.data }));
-    }
-     }
   }
 
   renderUpDel = () => {
-    const { currentUserId, postAuthorId, currentUser } = this.state;
-    const { slug } = this.props.post;
+    const { currentUserId, currentUser, post } = this.state;
+    const { slug } = this.state.post;
 
-    if (currentUserId !== postAuthorId) {
+    if (currentUserId !== post.author) {
       if (currentUser.is_superuser) {
         console.log("admin has right to delete post.");
         return (
@@ -64,8 +74,7 @@ export default class PostDetail extends Component {
   };
 
   addComment = (comment) => {
-    const { comments } = this.state;
-    const { post } = this.props;
+    const { comments, post } = this.state;
     let newComments = comments;
     newComments.unshift(comment);
     this.setState({ comments: newComments });
@@ -76,15 +85,13 @@ export default class PostDetail extends Component {
   };
 
   render() {
-    const { title, image, author, content, published } = this.props.post;
+    const { title, image, author, content, published } = this.state.post;
 
     const { comments } = this.state;
 
     const accessToken = localStorage.getItem("access_token");
 
-    console.log(this.props.post);
-
-    return this.props.post ? (
+    return this.state.post ? (
       <DarkContext.Consumer>
         {(darkContext) => (
           <UserContext.Consumer>

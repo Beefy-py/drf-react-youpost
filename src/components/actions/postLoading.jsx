@@ -26,6 +26,10 @@ const PostLoading = (Component) => {
       return <Component {...props} />;
     }
 
+    if (props.textLoad){
+      return <p>{props.textLoad} ...</p>
+    }
+
     return <React.Fragment>{renderLoadingBars(rows)}</React.Fragment>;
   };
 };

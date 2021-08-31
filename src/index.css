@@ -168,7 +168,7 @@ main .badge {
   width: 100%;
   border-radius: 0.2rem;
   text-align: left;
-  background-color: rgba(255, 255, 255, 0.45);
+  background-color: #f8f9fa;
   color: var(--dark);
   border: none;
   display: grid;
@@ -177,7 +177,7 @@ main .badge {
 }
 
 .posts-reacted .accordion button:hover {
-  border-bottom: 0.1rem solid var(--dark);
+ 
    background-color: rgb(221, 221, 221);
    border-bottom-left-radius: 0;
    border-bottom-right-radius: 0;
@@ -206,21 +206,22 @@ main .badge {
 .accordion .data2,
 .accordion .data3 {
   max-height: 10rem;
-  margin-left: 0.1rem;
   box-shadow: 2px 8px 13px rgba(0, 0, 0, 0.2);
   padding: 0.5rem;
   border-radius: 0.3rem;
   overflow-y: auto;
   position: absolute;
   width: -webkit-fill-available;
-  background: aliceblue;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background: #ebebeb;
   z-index: 1;
 }
 
 .posts-reacted.bg-dark .accordion .data1,
 .posts-reacted.bg-dark .accordion .data2,
 .posts-reacted.bg-dark .accordion .data3 {
-  background: #212529;
+  background: #2a3036;
 }
 
 .data1 i,
@@ -243,7 +244,6 @@ main .badge {
 
 .posts-reacted.bg-dark .accordion button:hover {
   border: none;
-  border-bottom: 0.1rem solid white;
   background-color: rgba(0, 0, 0, 0.2);
   border-top-right-radius: .2rem;
   border-top-left-radius: .2rem;
